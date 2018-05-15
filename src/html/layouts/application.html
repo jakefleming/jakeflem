@@ -6,13 +6,13 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <link rel="stylesheet" href="stylesheets/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.7.1/dist/phaser.min.js"></script>
+
     {% include "shared/app-icons.html" %}
     {% block head %}{% endblock %}
   </head>
   <body>
     {% block content %}{% endblock %}
-    {% block javascript %}
-      <script src="javascripts/app.js"></script>
-    {% endblock %}
+
   </body>
 </html>
