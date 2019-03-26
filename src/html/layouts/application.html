@@ -6,13 +6,51 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <link rel="stylesheet" href="stylesheets/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.7.1/dist/phaser.min.js"></script>
+
 
     {% include "shared/app-icons.html" %}
     {% block head %}{% endblock %}
   </head>
   <body>
+    <script>
+			var fonts = [
+				{ fontFamily: 'Arvo', 'font-weight': 700 },
+				'Wire One',
+				'Bitter',
+				'Holtwood One SC',
+				'Ubuntu Condensed',
+				'Krona One',
+				'Dorsa',
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 700 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 300 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 400 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 200 },
+				{ fontFamily: 'Six Caps' },
+				{ fontFamily: 'Roboto Condensed' },
+			];
+		</script>
     {% block content %}{% endblock %}
+    {% block javascript %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="javascripts/app.js"></script>
+      <script>
+        var ftw = new FontToWidth({
+      		elements:'.ftw h3',
+      		fonts: fonts
+          });
 
+          var stw = new FontToWidth({elements: '.stw .resize'});
+
+          var remix = function() {
+              $.each($('form').serializeArray(), function(i, item) {
+                  ftw.options[item.name] = parseFloat(item.value) || item.value;
+              });
+              ftw.updateWidths();
+          };
+
+          $('input').on('change', remix);
+          remix();
+      </script>
+    {% endblock %}
   </body>
 </html>

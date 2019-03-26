@@ -1,132 +1,169 @@
-<!doctype html><html><head><meta charset="utf-8"><title></title><link rel="stylesheet" href="stylesheets/app-8f1ff85fa7.css"><meta name="viewport" content="width=device-width,initial-scale=1"><script src="//cdn.jsdelivr.net/npm/phaser@3.7.1/dist/phaser.min.js"></script><!-- Generate using http://realfavicongenerator.net/ --></head><body><script>// define variables
-  var game;
-  var player;
-  var platforms;
-  var badges;
-  var items;
-  var cursors;
-  var jumpButton;
-  var text;
-  var winningMessage;
-  var won = false;
-  var currentScore = 0;
-  var winningScore = 100;
 
-  // add collectable items to the game
-  function addItems() {
-    items = game.add.physicsGroup();
-    createItem(375, 300, 'coin');
-  }
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="stylesheets/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  // add platforms to the game
-  function addPlatforms() {
-    platforms = game.add.physicsGroup();
-    platforms.create(450, 550, 'platform');
-    platforms.setAll('body.immovable', true);
-  }
 
-  // create a single animated item and add to screen
-  function createItem(left, top, image) {
-    var item = items.create(left, top, image);
-    item.animations.add('spin');
-    item.animations.play('spin', 10, true);
-  }
+    <!-- Generate using http://realfavicongenerator.net/ -->
 
-  // create the winning badge and add to screen
-  function createBadge() {
-    badges = game.add.physicsGroup();
-    var badge = badges.create(750, 400, 'badge');
-    badge.animations.add('spin');
-    badge.animations.play('spin', 10, true);
-  }
 
-  // when the player collects an item on the screen
-  function itemHandler(player, item) {
-    item.kill();
-    currentScore = currentScore + 10;
-    if (currentScore === winningScore) {
-        createBadge();
-    }
-  }
+    
+  </head>
+  <body>
+    <script>
+			var fonts = [
+				{ fontFamily: 'Arvo', 'font-weight': 700 },
+				'Wire One',
+				'Bitter',
+				'Holtwood One SC',
+				'Ubuntu Condensed',
+				'Krona One',
+				'Dorsa',
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 700 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 300 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 400 },
+				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 200 },
+				{ fontFamily: 'Six Caps' },
+				{ fontFamily: 'Roboto Condensed' },
+			];
+		</script>
+    
 
-  // when the player collects the badge at the end of the game
-  function badgeHandler(player, badge) {
-    badge.kill();
-    won = true;
-  }
+<main>
+  <section class="section">
+    <!-- This section should clearly layout what I'm good at and what I want to be doing day to day -->
+    <div class="container text-center">
+      <div class="stw p-relative">
+        <h1>
+          <span class="resize d-block" style="padding: 0 20%;">Jake</span>
+          <span class="resize d-block">Fleming</span>
+        </h1>
+        <h2>Product Designer</h2>
+      </div>
+      <p class="lead">
+        I design products and create things with a lot of personality.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <!-- This section should talk about my past experience -->
+    <div class="container">
+      <h4 class="text-center">My abbreviated</h4>
+      <div class="stw p-relative">
+        <h3 class="text-center resize">STORY</h3>
+      </div>
+      <div class="sprite-window" style="margin-top: -60px;margin-bottom: 2rem;">
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="rig rig-csshtml">
+          <div class="csshtml-walking"></div>
+        </div>
+        <div class="rig rig-artdesign">
+          <div class="artdesign-crawling"></div>
+        </div>
+        <div class="rig rig-guy">
+          <div class="guy-jogging"></div>
+        </div>
+        <div class="rig rig-js">
+          <div class="js-flying"></div>
+        </div>
+        <div class="rig rig-sanity">
+          <div class="sanity-hopping"></div>
+        </div>
+        <div class="rig rig-perfection">
+          <div class="perfection-walking"></div>
+        </div>
+      </div>
+      <div class="master-meter">
+        <div class="mastered"></div>
+        <div class="not-mastered"></div>
+        <div class="master-line"></div>
+      </div>
+      <p>I always thought my <a href="https://dribbble.com/shots/2587339-Mega-Turd">illustration</a>, <a href="https://dribbble.com/shots/2415798-Kitty-Wiggle-Pt-2">animation</a>, or <a href="https://songclubsampler.bandcamp.com/track/dreadlines">music</a> hobbies would define my career. Little did I know, I'd fall into the digital product design world through a series of fortunate events. From startup to startup, I quickly advanced into roles which enabled me to learn a bucket of skills that we now call product design. The things that I thought would define my career, helped me start a new one.</p>
+      <div class="lookatme">
+        <p class="m-0">I design products. <a href="#">Read a case study of my product design experience.</a></p>
+      </div>
+      <p>I've also always been an advocate for sharing skills with others–whether it was creating <a href="https://teamtreehouse.com/library/mobile-game-design">an online course on how to design a game</a> or creating <a href="https://medium.com/type-thursday/create-your-own-font-in-48-hours-f1d42f911a51">an event where people could learn type design</a>.</p>
+      <p>For three years, I had the pleasure of running the <a href="http://tradecraft.com/">product design program at Tradecraft</a>, where I and a team of other talented instructors trained over 350 highly motivated and talented people to work as product designers in the San Francisco Bay Area. Most of them work here in the Bay at companies like Google, Facebook, Airbnb, and Tesla.</p>
+      <div class="lookatme">
+        <p class="m-0">I manage designers. <a href="#">Read about my experience managing Product Designers.</a></p>
+      </div>
+      <p>For more of my work history, take a look at my <a href="https://www.linkedin.com/in/jakeflem/">Linkedin</a>.</p>
+    </div>
+  </section>
+  <section class="section">
+    <!-- This section should talk about what I'm currently doing and why -->
+    <div class="container">
+      <h4 class="text-center">My professional</h4>
+      <div class="stw">
+        <h3 class="text-center resize">Qualities</h3>
+      </div>
+      <ul>
+        <li>I create super polished visual designs (UI).</li>
+        <li>I solve hard problems and have good intuition for how people use products (UX).</li>
+        <li>I write production-level code in HTML + CSS + basic Javascript.</li>
+        <li>I care about the business needs, implications, and possibilities of my designs.</li>
+        <li>I have strong beliefs, but am a good listener who likes to collaborate.</li>
+        <li>I tell stories using both words and visuals, and plan the best way to make my point.</li>
+        <li>I enjoy mentoring and teaching team members what I've learned.</li>
+        <li>I love illustrating and animating graphics when I get the chance!</li>
+      </ul>
+    </div>
+  </section>
+  <section class="section">
+    <!-- This section should talk about what I'm currently doing and why -->
+    <div class="container">
+      <h4 class="text-center">My dream</h4>
+      <div class="stw">
+        <h3 class="text-center resize">Position</h3>
+      </div>
+      <ul>
+        <li>Working on each feature from idea to UX to pixel-perfect execution.</li>
+        <li>Polishing each feature in HTML, CSS, and crappy JS.</li>
+        <li>Using data from Community & Support teams to plan and scope the product roadmap.</li>
+        <li>Creating design systems that are simple to understand.</li>
+        <li>Working with marketing to devise new ways to tell great stories.</li>
+        <li>Mentoring fellow designers</li>
+      </ul>
+      <p class="text-center">
+        <a class="btn btn-primary btn-lg" href="https://www.linkedin.com/in/jakeflem/">Hire me</a>
+      </p>
+    </div>
+  </section>
 
-  // setup game when the web page loads
-  window.onload = function () {
-    game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
-    // before the game begins
-    function preload() {
-      game.stage.backgroundColor = '#5db1ad';
+</main>
 
-      //Load images
-      game.load.image('platform', 'platform_1.png');
 
-      //Load spritesheets
-      game.load.spritesheet('player', 'chalkers.png', 48, 62);
-      game.load.spritesheet('coin', 'coin.png', 36, 44);
-      game.load.spritesheet('badge', 'badge.png', 42, 54);
-    }
 
-    // initial game set up
-    function create() {
-      player = game.add.sprite(50, 600, 'player');
-      player.animations.add('walk');
-      player.anchor.setTo(0.5, 1);
-      game.physics.arcade.enable(player);
-      player.body.collideWorldBounds = true;
-      player.body.gravity.y = 500;
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="javascripts/app.js"></script>
+      <script>
+        var ftw = new FontToWidth({
+      		elements:'.ftw h3',
+      		fonts: fonts
+          });
 
-      addItems();
-      addPlatforms();
+          var stw = new FontToWidth({elements: '.stw .resize'});
 
-      cursors = game.input.keyboard.createCursorKeys();
-      jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-      text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
-      winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
-      winningMessage.anchor.setTo(0.5, 1);
-    }
+          var remix = function() {
+              $.each($('form').serializeArray(), function(i, item) {
+                  ftw.options[item.name] = parseFloat(item.value) || item.value;
+              });
+              ftw.updateWidths();
+          };
 
-    // while the game is running
-    function update() {
-      text.text = "SCORE: " + currentScore;
-      game.physics.arcade.collide(player, platforms);
-      game.physics.arcade.overlap(player, items, itemHandler);
-      game.physics.arcade.overlap(player, badges, badgeHandler);
-      player.body.velocity.x = 0;
-
-      // is the left cursor key presssed?
-      if (cursors.left.isDown) {
-        player.animations.play('walk', 10, true);
-        player.body.velocity.x = -300;
-        player.scale.x = - 1;
-      }
-      // is the right cursor key pressed?
-      else if (cursors.right.isDown) {
-        player.animations.play('walk', 10, true);
-        player.body.velocity.x = 300;
-        player.scale.x = 1;
-      }
-      // player doesn't move
-      else {
-        player.animations.stop();
-      }
-
-      if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
-        player.body.velocity.y = -400;
-      }
-      // when the player winw the game
-      if (won) {
-        winningMessage.text = "YOU WIN!!!";
-      }
-    }
-
-    function render() {
-
-    }
-
-  };</script></body></html>
+          $('input').on('change', remix);
+          remix();
+      </script>
+    
+  </body>
+</html>
