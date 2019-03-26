@@ -19,5 +19,9 @@
   "images/js-flying.svg": "images/js-flying-b618727ac0.svg",
   "images/perfection-walking.svg": "images/perfection-walking-b0571c4603.svg",
   "images/sanity-hopping.svg": "images/sanity-hopping-3097de20b3.svg",
-  "javascripts/app.js": "javascripts/app-6b0264781ec54678d7f6.js"
+  "javascripts/app.js": "javascripts/app-6b0264781ec54678d7f6.js",
+  "stylesheets/app.css": "stylesheets/app-89ff4291ff.css",
+  "stylesheets/spectre/spectre-exp.css": "stylesheets/spectre/spectre-exp-2d5d44cb0e.css",
+  "stylesheets/spectre/spectre-icons.css": "stylesheets/spectre/spectre-icons-b8cc287214.css",
+  "stylesheets/spectre/spectre.css": "stylesheets/spectre/spectre-38a98521b4.css"
 }
