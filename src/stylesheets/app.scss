@@ -40,7 +40,6 @@ body {
   font-family: "Obviously";
   font-feature-settings: "salt";
   background: #f8f8f8;
-  overflow-x: hidden;
 }
 
 main {
@@ -49,6 +48,7 @@ main {
   max-width: 1025px;
   margin: 0 auto 0 auto;
   padding-top: 3rem;
+  overflow-x: hidden;
 }
 
 ul {
