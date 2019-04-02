@@ -113,6 +113,7 @@ $sprite-window-x: 160px;
   height: $sprite-window-x;
   width: 100%;
   position: relative;
+  z-index: 1;
 }
 
 @mixin animatedSprite($subject, $type, $duration: .6s, $size: 160px, $frames: 8, $ext: 'svg'){
@@ -187,6 +188,7 @@ $sprite-window-x: 160px;
   }
   @media only screen and (max-width: 600px) {
     height: $sprite-window-x*.65;
+    width: $sprite-window-x*.65;
   }
 }
 
@@ -201,6 +203,9 @@ $sprite-window-x: 160px;
   top: 50%;
   transform: translate(-50%, -50%);
   animation-delay: -1s;
+  @media only screen and (max-width: 600px) {
+    left: 90%;
+  }
 }
 
 .rig-sanity {
@@ -208,6 +213,9 @@ $sprite-window-x: 160px;
   top: 50%;
   transform: translate(-50%, -50%);
   animation-delay: -.5s;
+  @media only screen and (max-width: 600px) {
+    left: 66%;
+  }
 }
 
 .rig-js {
@@ -215,6 +223,8 @@ $sprite-window-x: 160px;
   top: 50%;
   transform: translate(-50%, -50%);
   animation-delay: -1.2s;
+  @media only screen and (max-width: 600px) {
+  }
 }
 
 .rig-csshtml {
@@ -222,6 +232,9 @@ $sprite-window-x: 160px;
   top: 50%;
   transform: translate(-50%, -50%);
   animation-delay: -1s;
+  @media only screen and (max-width: 600px) {
+    left: 30%;
+  }
 }
 
 .rig-artdesign {
@@ -233,6 +246,8 @@ $sprite-window-x: 160px;
   @media only screen and (max-width: 600px) {
     height: 200px*.65;
     width: 200px*.65;
+    top: 56%;
+    left: 15%;
   }
 }
 
@@ -433,7 +448,13 @@ a {
 
 // media queries
 @media only screen and (max-width: 600px) {
+  main {
+    padding-top: 1rem;
+  }
   .section {
     padding: .5rem;
+  }
+  .btn-wide-mobile {
+    width: 100%;
   }
 }
