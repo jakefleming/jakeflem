@@ -143,6 +143,34 @@ $sprite-window-x: 160px;
   display: inline-block;
 }
 
+@mixin animatedSpriteResponsive($subject, $type, $duration: .6s, $size: (160px*.65), $frames: 8, $ext: 'svg'){
+  @keyframes #{$subject}-#{$type}Play {
+     from { background-position:    0px; }
+       to { background-position: -$size * $frames; }
+  }
+  background-image: url(../images/#{$subject}-#{$type}.#{$ext});
+  background-repeat: no-repeat;
+  animation: #{$subject}-#{$type}Play $duration steps($frames) infinite;
+  background-size: $frames * $size;
+  height: $size;
+  width: $size;
+  display: inline-block;
+}
+
+@mixin animatedSpriteLargeResponsive($subject, $type, $duration: .6s, $size: (200px*.65), $frames: 8, $ext: 'svg'){
+  @keyframes #{$subject}-#{$type}Play {
+     from { background-position:    0px; }
+       to { background-position: -$size * $frames; }
+  }
+  background-image: url(../images/#{$subject}-#{$type}.#{$ext});
+  background-repeat: no-repeat;
+  animation: #{$subject}-#{$type}Play $duration steps($frames) infinite;
+  background-size: $frames * $size;
+  height: $size;
+  width: $size;
+  display: inline-block;
+}
+
 @keyframes backAndForth {
       0% { margin-left:    -5px; }
     100% { margin-left: 5px; }
@@ -156,6 +184,9 @@ $sprite-window-x: 160px;
   > * {
     left: 0;
     top: 0;
+  }
+  @media only screen and (max-width: 600px) {
+    height: $sprite-window-x*.65;
   }
 }
 
@@ -199,30 +230,52 @@ $sprite-window-x: 160px;
   height: 200px;
   width: 200px;
   transform: translate(-50%, -50%);
+  @media only screen and (max-width: 600px) {
+    height: 200px*.65;
+    width: 200px*.65;
+  }
 }
 
 .guy-jogging {
   @include animatedSprite('guy', 'jogging');
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteResponsive('guy', 'jogging');
+  }
 }
 
 .perfection-walking {
   @include animatedSprite('perfection', 'walking', $duration: .3s, $frames: 4);
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteResponsive('perfection', 'walking', $duration: .3s, $frames: 4);
+  }
 }
 
 .sanity-hopping {
   @include animatedSprite('sanity', 'hopping', $duration: .4s, $frames: 5);
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteResponsive('sanity', 'hopping', $duration: .4s, $frames: 5);
+  }
 }
 
 .js-flying {
   @include animatedSprite('js', 'flying', $duration: .5s, $frames: 5);
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteResponsive('js', 'flying', $duration: .5s, $frames: 5);
+  }
 }
 
 .csshtml-walking {
   @include animatedSprite('csshtml', 'walking');
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteResponsive('csshtml', 'walking');
+  }
 }
 
 .artdesign-crawling {
   @include animatedSpriteLarge('artdesign', 'crawling', $duration: .5s, $frames: 5);
+  @media only screen and (max-width: 600px) {
+    @include animatedSpriteLargeResponsive('artdesign', 'crawling', $duration: .5s, $frames: 5);
+  }
 }
 
 // particles
@@ -317,6 +370,9 @@ $pmult: 1;
   transform: translateY(-50%);
   padding: 1rem;
   top: 50%;
+  @media only screen and (max-width: 600px) {
+    padding: .5rem;
+  }
 }
 
 .mastered {
@@ -373,4 +429,11 @@ a {
   border-radius: 1000px;
   height: auto;
   padding: 1rem 2rem;
+}
+
+// media queries
+@media only screen and (max-width: 600px) {
+  .section {
+    padding: .5rem;
+  }
 }
