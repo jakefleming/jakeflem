@@ -95,6 +95,10 @@ p.lead {
   padding: 2rem;
 }
 
+.spacer {
+  height: 3rem;
+}
+
 // containers
 section .container {
   max-width: 800px;
@@ -395,6 +399,9 @@ $pmult: 1;
   padding-left: 0;
   &:after {
     content: 'Already Conquered';
+    @media only screen and (max-width: 600px) {
+      content: 'Conquered';
+    }
   }
 }
 
@@ -403,6 +410,9 @@ $pmult: 1;
   padding-right: 0;
   &:after {
     content: 'Forever Chasing';
+    @media only screen and (max-width: 600px) {
+      content: 'Chasing';
+    }
   }
 }
 
