@@ -8,9 +8,9 @@
 // Static fallback pose (used if a name has no clip). joint -> angle (deg).
 export const poses = {
   idle: {
-    root: { ty: 0 }, torso: 4, head: -2,
-    armF: -7, forearmF: 9, armB: 9, forearmB: 9,
-    thighF: -11, shinF: 8, footF: 0, thighB: 12, shinB: -7, footB: 0,
+    root: { ty: 0 }, torso: 5, head: -2,
+    armF: -10, forearmF: 58, armB: 16, forearmB: 40,
+    thighF: -10, shinF: 7, footF: 0, thighB: 11, shinB: -6, footB: 0,
   },
 };
 
@@ -23,12 +23,12 @@ export const clips = {
     duration: 2.6,
     loop: true,
     keyframes: [
-      { t: 0.0, root: { ty: 0 }, torso: 4, head: -2,
-        armF: -7, forearmF: 9, armB: 9, forearmB: 9,
-        thighF: -11, shinF: 8, thighB: 12, shinB: -7 },
-      { t: 0.5, root: { ty: -3 }, torso: 5, head: -3,
-        armF: -4, forearmF: 7, armB: 6, forearmB: 12,
-        thighF: -11, shinF: 7, thighB: 12, shinB: -6 },
+      { t: 0.0, root: { ty: 0 }, torso: 5, head: -2,
+        armF: -10, forearmF: 58, armB: 16, forearmB: 40,
+        thighF: -10, shinF: 7, thighB: 11, shinB: -6 },
+      { t: 0.5, root: { ty: -3 }, torso: 6, head: -3,
+        armF: -8, forearmF: 54, armB: 13, forearmB: 43,
+        thighF: -10, shinF: 6, thighB: 11, shinB: -5 },
     ],
   },
 
@@ -87,10 +87,10 @@ export const clips = {
 // shadow shrinks as the character rises (kept here so it travels with the data).
 export const shadowTrack = {
   jump: [
-    { t: 0.0, scale: 1, opacity: 0.16 },
-    { t: 0.18, scale: 1.05, opacity: 0.18 },
-    { t: 0.6, scale: 0.45, opacity: 0.07 },
-    { t: 0.85, scale: 1.05, opacity: 0.18 },
-    { t: 1.0, scale: 1, opacity: 0.16 },
+    { t: 0.0, scale: 1, opacity: 0.9 },
+    { t: 0.18, scale: 1.05, opacity: 0.95 },
+    { t: 0.6, scale: 0.45, opacity: 0.4 },
+    { t: 0.85, scale: 1.05, opacity: 0.95 },
+    { t: 1.0, scale: 1, opacity: 0.9 },
   ],
 };

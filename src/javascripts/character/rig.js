@@ -21,28 +21,80 @@ function boneTransform(name, angle, ty = 0) {
   return `translate(${px}px, ${py}px) rotate(${angle}deg)`;
 }
 
-// Draw a bone's geometry (a round-capped "capsule" limb, or the head).
+// Draw the chibi head: orange face, big puffy black hair, brows, dot eyes,
+// cheeks and a smile. Head-local origin sits at the neck; the face is above it.
+function makeHead(pal) {
+  const g = svg('g');
+  const ink = pal.ink, skin = pal.skin;
+  // face (round), with the orange ear on the back (left) side
+  g.appendChild(svg('ellipse', { cx: 2, cy: -30, rx: 39, ry: 40, fill: skin, stroke: ink, 'stroke-width': 4 }));
+  g.appendChild(svg('ellipse', { cx: -36, cy: -8, rx: 9, ry: 13, fill: skin, stroke: ink, 'stroke-width': 4 }));
+  // styled black hair — a swept quiff: volume up and back, fringe across the
+  // forehead with a small curl at the front, sideburn down the back side.
+  const hair = svg('g', { fill: ink, stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round' });
+  hair.appendChild(svg('path', {
+    d: 'M -28,-30 C -44,-42 -46,-72 -20,-83 C 2,-92 30,-88 42,-72 '
+     + 'C 50,-61 49,-51 41,-48 C 38,-57 30,-59 24,-53 C 23,-49 25,-46 21,-46 '
+     + 'C 11,-53 -7,-55 -19,-49 C -25,-46 -27,-39 -29,-30 Z',
+  }));
+  // sideburn curl swooping down past the ear on the back side
+  hair.appendChild(svg('path', { d: 'M -29,-34 C -38,-28 -40,-16 -33,-12 C -30,-19 -27,-25 -24,-31 Z' }));
+  g.appendChild(hair);
+  // two little forehead bangs poking down into the orange
+  g.appendChild(svg('path', { d: 'M -14,-50 q 7,9 14,1', fill: ink, stroke: ink, 'stroke-width': 2 }));
+  g.appendChild(svg('path', { d: 'M 2,-50 q 7,8 13,1', fill: ink, stroke: ink, 'stroke-width': 2 }));
+  // brows (facing +x / right)
+  g.appendChild(svg('path', { d: 'M -16,-26 Q -9,-31 -2,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
+  g.appendChild(svg('path', { d: 'M 12,-26 Q 19,-31 26,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
+  // dot eyes
+  g.appendChild(svg('circle', { cx: -9, cy: -16, r: 3, fill: ink }));
+  g.appendChild(svg('circle', { cx: 19, cy: -16, r: 3, fill: ink }));
+  // cheeks
+  g.appendChild(svg('circle', { cx: -20, cy: -4, r: 2, fill: ink }));
+  g.appendChild(svg('circle', { cx: 30, cy: -4, r: 2, fill: ink }));
+  // open smile
+  g.appendChild(svg('path', { d: 'M 3,-6 Q 10,4 17,-6 Q 10,-3 3,-6 Z', fill: ink }));
+  return g;
+}
+
+// Draw a bone's geometry by kind. `skin` arms = orange capsule with a black
+// outline (drawn as a wide ink stroke under a narrower orange one) + a white
+// sleeve cuff at the shoulder. `leg` = solid black. `shoe` = a black bulb.
 function makeShape(name, pal) {
   const b = bones[name];
   const g = svg('g');
-  if (b.type === 'head') {
-    g.appendChild(svg('circle', { cx: 0, cy: -18, r: b.radius, fill: pal.paper, stroke: pal.ink, 'stroke-width': 3 }));
-    // hair tuft (faces back/up)
-    g.appendChild(svg('path', { d: 'M -16,-26 Q -2,-46 18,-30 Q 6,-34 -2,-30 Q -10,-30 -16,-22 Z', fill: pal.ink }));
-    // eye + brow (faces +x / right)
-    g.appendChild(svg('circle', { cx: 9, cy: -20, r: 2.6, fill: pal.ink }));
-    g.appendChild(svg('path', { d: 'M 5,-9 Q 11,-6 15,-11', fill: 'none', stroke: pal.ink, 'stroke-width': 2.4, 'stroke-linecap': 'round' }));
+  if (b.type === 'head') return makeHead(pal);
+
+  if (b.type === 'shoe') {
+    g.appendChild(svg('ellipse', { cx: 6, cy: 3, rx: 17, ry: 12, fill: pal.ink, stroke: pal.ink, 'stroke-width': 4 }));
     return g;
   }
+
   const [x2, y2] = b.tip;
-  g.appendChild(svg('line', { x1: 0, y1: 0, x2, y2, stroke: pal[b.color] || pal.ink, 'stroke-width': b.width, 'stroke-linecap': 'round' }));
-  // accents: orange shirt over the torso, orange toe on the feet
-  if (name === 'torso') {
-    g.appendChild(svg('line', { x1: 0, y1: -6, x2: 0, y2: -40, stroke: pal.pop, 'stroke-width': b.width - 6, 'stroke-linecap': 'round' }));
+  const line = (w, color) => svg('line', { x1: 0, y1: 0, x2, y2, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+
+  if (b.kind === 'skin') {
+    g.appendChild(line(b.width, pal.ink)); // outline
+    g.appendChild(line(b.width - 8, pal.skin)); // orange fill
+    if (name === 'armF' || name === 'armB') {
+      // white sleeve cuff at the shoulder
+      const cuff = (w, color) => svg('line', { x1: 0, y1: 0, x2: 0, y2: 11, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round' });
+      g.appendChild(cuff(b.width, pal.ink));
+      g.appendChild(cuff(b.width - 8, pal.paper));
+    }
+    return g;
   }
-  if (name === 'footF' || name === 'footB') {
-    g.appendChild(svg('line', { x1: x2 - 7, y1: 0, x2, y2: 0, stroke: pal.pop, 'stroke-width': b.width, 'stroke-linecap': 'round' }));
+
+  if (b.kind === 'body') {
+    g.appendChild(line(b.width, pal.ink)); // black body
+    // white shirt showing as a diagonal sash across the chest
+    g.appendChild(svg('line', { x1: 10, y1: -22, x2: -6, y2: -6, stroke: pal.ink, 'stroke-width': 15, 'stroke-linecap': 'round' }));
+    g.appendChild(svg('line', { x1: 10, y1: -22, x2: -6, y2: -6, stroke: pal.paper, 'stroke-width': 9, 'stroke-linecap': 'round' }));
+    return g;
   }
+
+  // legs / default: solid black capsule
+  g.appendChild(line(b.width, pal.ink));
   return g;
 }
 
@@ -76,9 +128,9 @@ export function buildRig(pal = defaultPalette) {
   groups.root.appendChild(groups.torso);
   groups.root.appendChild(groups.thighF);
 
-  const root = svg('svg', { viewBox: '0 0 240 264', class: 'rig-svg' });
-  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 120, cy: 226, rx: 34, ry: 7 }));
-  const anchor = svg('g', { transform: 'translate(120 150)' });
+  const root = svg('svg', { viewBox: '0 0 220 250', class: 'rig-svg' });
+  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 110, cy: 222, rx: 42, ry: 8, fill: pal.ink }));
+  const anchor = svg('g', { transform: 'translate(110 150)' });
   anchor.appendChild(groups.root);
   root.appendChild(anchor);
   return { svg: root, groups };
@@ -117,9 +169,9 @@ function compileAll() {
 }
 
 const baseCSS = `
-  :host{ display:inline-block; width:240px; height:264px; }
+  :host{ display:inline-block; width:220px; height:250px; }
   .rig-svg{ width:100%; height:100%; overflow:visible; }
-  .rig-shadow{ fill:rgba(0,0,1,.16); transition:transform .28s ease, opacity .28s ease; transform-box:view-box; transform-origin:120px 226px; }
+  .rig-shadow{ opacity:.9; transition:transform .28s ease, opacity .28s ease; transform-box:view-box; transform-origin:110px 222px; }
   .bone{ transform-box:view-box; transform-origin:0 0; transition:transform .26s ease; }
 `;
 
