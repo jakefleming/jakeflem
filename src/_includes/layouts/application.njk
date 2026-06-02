@@ -8,13 +8,13 @@
     <meta name="description" content="Jake Fleming is a Product Designer with specialties in Visual Design, Illustration, and Front-end coding">
 
     <!-- Preload every web font so they're all ready before first paint and content reveals fast. -->
-    <link rel="preload" href="fonts/Industrious-WideBlack.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Obviously-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Obviously-Extended.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Obviously-Narrow_Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Gooper0.2-BoldItalic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Industrious-WideBlack.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Obviously-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Obviously-Extended.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Obviously-Narrow_Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Gooper0.2-BoldItalic.woff2" as="font" type="font/woff2" crossorigin>
 
-    <link rel="stylesheet" href="stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
@@ -56,31 +56,36 @@
     {% block content %}{% endblock %}
     {% block javascript %}
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="javascripts/app.js"></script>
+      <script src="/javascripts/app.js"></script>
       <script>
         (function () {
           var docEl = document.documentElement;
 
+          var started = false;
           function start() {
-            // Only run once, even if both the font promise and the safety net fire.
-            if (!docEl.classList.contains('fonts-loading')) return;
+            if (started) return; // run once, whether triggered by fonts or the safety net
+            started = true;
 
-            // Scale the display headings to fill their container.
-            var stw = new FontToWidth({ elements: '.stw .resize' });
+            // Fit the display headings to their container. This is a
+            // progressive enhancement: if FontToWidth or jQuery is unavailable
+            // (e.g. the CDN fails), skip it — but always reveal the page so a
+            // failed dependency can never leave the site blank.
+            try {
+              var stw = new FontToWidth({ elements: '.stw .resize' });
 
-            // Multi-font fitter — only matches on pages that have `.ftw h3`.
-            var ftw = new FontToWidth({ elements: '.ftw h3', fonts: fonts });
+              // Multi-font fitter — only matches on pages that have `.ftw h3`.
+              var ftw = new FontToWidth({ elements: '.ftw h3', fonts: fonts });
 
-            var remix = function () {
-              $.each($('form').serializeArray(), function (i, item) {
-                ftw.options[item.name] = parseFloat(item.value) || item.value;
-              });
-              ftw.updateWidths();
-            };
-            $('input').on('change', remix);
-            remix();
+              var remix = function () {
+                $.each($('form').serializeArray(), function (i, item) {
+                  ftw.options[item.name] = parseFloat(item.value) || item.value;
+                });
+                ftw.updateWidths();
+              };
+              $('input').on('change', remix);
+              remix();
+            } catch (e) { /* heading auto-fit is optional */ }
 
-            // Fonts are loaded and headings are measured — reveal them.
             docEl.classList.remove('fonts-loading');
           }
 
