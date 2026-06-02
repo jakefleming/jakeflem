@@ -26,7 +26,7 @@ function boneTransform(name, angle, ty = 0) {
 // guy-jogging.svg — to match it exactly. Coordinates are in the source frame's
 // space (face centred at 91,61); the wrapper transform scales it and moves the
 // face centre to the head bone's local origin. ink #000001 / skin #FB3600.
-const HEAD_ART = `<g transform="translate(0 -46) scale(1.85) translate(-91 -61)">
+const HEAD_ART = `<g transform="translate(0 -36) scale(1.85) translate(-91 -61)">
   <path d="M68.2,67.7C72.5,83.5,89.6,90,92.5,88.2s-3-9.7-3-9.7S76.9,64.8,68.2,67.7z" fill="#000001"/>
   <path d="M78,79c0,6.6-3,12.8-8,17l-7-7C63,89,74,76,78,79z" fill="#000001"/>
   <circle cx="91.1" cy="61" r="21" fill="#FB3600" stroke="#000001" stroke-width="3"/>
@@ -61,30 +61,28 @@ function makeShape(name, pal) {
   if (b.type === 'head') return makeHead(pal);
 
   if (b.type === 'shoe') {
-    g.appendChild(svg('ellipse', { cx: 6, cy: 3, rx: 17, ry: 12, fill: pal.ink, stroke: pal.ink, 'stroke-width': 4 }));
+    g.appendChild(svg('ellipse', { cx: 8, cy: 4, rx: 23, ry: 14, fill: pal.ink, stroke: pal.ink, 'stroke-width': 4 }));
     return g;
   }
 
   const [x2, y2] = b.tip;
   const line = (w, color) => svg('line', { x1: 0, y1: 0, x2, y2, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
 
-  if (b.kind === 'skin') {
-    g.appendChild(line(b.width, pal.ink)); // outline
-    g.appendChild(line(b.width - 8, pal.skin)); // orange fill
-    if (name === 'armF' || name === 'armB') {
-      // white sleeve covering the upper ~half of the arm (the arm's black
-      // outline shows around it); orange forearm/hand below
-      g.appendChild(svg('line', { x1: 0, y1: 0, x2: 0, y2: 15, stroke: pal.paper, 'stroke-width': b.width - 8, 'stroke-linecap': 'round' }));
-    }
+  // outlined capsule limb: wide black stroke (outline) under a narrower fill.
+  // 'skin' = orange (forearm/hand), 'sleeve' = white shirt sleeve (upper arm).
+  if (b.kind === 'skin' || b.kind === 'sleeve') {
+    g.appendChild(line(b.width, pal.ink));
+    g.appendChild(line(b.width - 8, b.kind === 'sleeve' ? pal.paper : pal.skin));
     return g;
   }
 
   if (b.kind === 'body') {
-    // white shirt = black outline (wide stroke) under a narrower white stroke
-    g.appendChild(line(b.width, pal.ink));
-    g.appendChild(line(b.width - 6, pal.paper));
-    // the head casts a black shadow over the top of the shirt
-    g.appendChild(svg('ellipse', { cx: 1, cy: -18, rx: b.width / 2 - 5, ry: 11, fill: pal.ink }));
+    // big bold white shirt panel (black outline) filling the chest, just above
+    // the hips so the black legs meet cleanly beneath it.
+    g.appendChild(svg('ellipse', { cx: -2, cy: -11, rx: 32, ry: 27, fill: pal.paper, stroke: pal.ink, 'stroke-width': 4 }));
+    // head's cast shadow — only a THIN crescent hugging the top edge (offset
+    // slightly right), so the white panel itself stays dominant.
+    g.appendChild(svg('ellipse', { cx: 5, cy: -29, rx: 23, ry: 9, fill: pal.ink }));
     return g;
   }
 
@@ -125,7 +123,7 @@ export function buildRig(pal = defaultPalette) {
   groups.root.appendChild(groups.thighF);
 
   const root = svg('svg', { viewBox: '0 0 220 250', class: 'rig-svg' });
-  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 110, cy: 222, rx: 42, ry: 8, fill: pal.ink }));
+  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 110, cy: 201, rx: 52, ry: 10, fill: pal.ink }));
   const anchor = svg('g', { transform: 'translate(110 150)' });
   anchor.appendChild(groups.root);
   root.appendChild(anchor);
@@ -167,7 +165,7 @@ function compileAll() {
 const baseCSS = `
   :host{ display:inline-block; width:220px; height:250px; }
   .rig-svg{ width:100%; height:100%; overflow:visible; }
-  .rig-shadow{ opacity:.9; transition:transform .28s ease, opacity .28s ease; transform-box:view-box; transform-origin:110px 222px; }
+  .rig-shadow{ opacity:.9; transition:transform .28s ease, opacity .28s ease; transform-box:view-box; transform-origin:110px 200px; }
   .bone{ transform-box:view-box; transform-origin:0 0; transition:transform .26s ease; }
 `;
 

@@ -20,22 +20,23 @@ export const bones = {
   root: { parent: null, pivot: [0, 0] },
 
   // short, squat white-shirt body (with a black outline + the head's shadow)
-  torso: { parent: 'root', pivot: [0, 2], tip: [0, -26], width: 52, kind: 'body' },
-  head: { parent: 'torso', pivot: [0, -26], type: 'head', radius: 40 },
+  torso: { parent: 'root', pivot: [0, 2], tip: [0, -30], width: 52, kind: 'body' },
+  head: { parent: 'torso', pivot: [0, -30], type: 'head', radius: 40 },
 
-  // arms are orange (skin) with a white sleeve at the shoulder; round "mitten"
-  // hands come free from the round stroke caps. Shoulders sit low on the body.
-  armB: { parent: 'torso', pivot: [-7, -20], tip: [0, 24], width: 31, kind: 'skin' },
-  forearmB: { parent: 'armB', pivot: [0, 24], tip: [0, 22], width: 29, kind: 'skin' },
-  armF: { parent: 'torso', pivot: [7, -20], tip: [0, 24], width: 33, kind: 'skin' },
-  forearmF: { parent: 'armF', pivot: [0, 24], tip: [0, 22], width: 31, kind: 'skin' },
+  // The character wears a white short-sleeve shirt: the UPPER arm is a white
+  // sleeve, the forearm + mitten hand are orange skin. Shoulders sit HIGH,
+  // tucked just under the head (per the source), so arms pump at chest height.
+  armB: { parent: 'torso', pivot: [-6, -26], tip: [0, 22], width: 30, kind: 'sleeve' },
+  forearmB: { parent: 'armB', pivot: [0, 22], tip: [0, 21], width: 28, kind: 'skin' },
+  armF: { parent: 'torso', pivot: [6, -26], tip: [0, 22], width: 32, kind: 'sleeve' },
+  forearmF: { parent: 'armF', pivot: [0, 22], tip: [0, 21], width: 30, kind: 'skin' },
 
-  // short black legs ending in chunky shoes
-  thighB: { parent: 'root', pivot: [-6, 2], tip: [0, 19], width: 25, kind: 'leg' },
-  shinB: { parent: 'thighB', pivot: [0, 19], tip: [0, 16], width: 23, kind: 'leg' },
+  // short, THICK black legs (≈ source stroke width) ending in chunky shoes
+  thighB: { parent: 'root', pivot: [-8, 2], tip: [0, 19], width: 34, kind: 'leg' },
+  shinB: { parent: 'thighB', pivot: [0, 19], tip: [0, 16], width: 32, kind: 'leg' },
   footB: { parent: 'shinB', pivot: [0, 16], type: 'shoe' },
-  thighF: { parent: 'root', pivot: [6, 2], tip: [0, 19], width: 27, kind: 'leg' },
-  shinF: { parent: 'thighF', pivot: [0, 19], tip: [0, 16], width: 25, kind: 'leg' },
+  thighF: { parent: 'root', pivot: [8, 2], tip: [0, 19], width: 36, kind: 'leg' },
+  shinF: { parent: 'thighF', pivot: [0, 19], tip: [0, 16], width: 34, kind: 'leg' },
   footF: { parent: 'shinF', pivot: [0, 16], type: 'shoe' },
 };
 
