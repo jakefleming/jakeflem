@@ -1,12 +1,29 @@
 {
   "name": "jakeflem",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Jake Fleming's personal site — built with Eleventy.",
   "repository": "https://github.com/jakefleming/jakeflem.git",
   "author": "jake <jcbflmng@gmail.com>",
   "license": "MIT",
-  "homepage": "https://jakefleming.github.io/",
-  "dependencies": {
-    "blendid": "^4.4.3"
+  "homepage": "https://jakeflem.com/",
+  "private": true,
+  "scripts": {
+    "start": "npm-run-all clean build:assets --parallel watch:*",
+    "watch:eleventy": "eleventy --serve --quiet",
+    "watch:sass": "sass --watch src/stylesheets/app.scss:docs/stylesheets/app.css",
+    "watch:js": "esbuild src/javascripts/app.js --bundle --sourcemap --outfile=docs/javascripts/app.js --watch",
+    "build": "npm-run-all clean build:assets build:html",
+    "build:assets": "npm-run-all --parallel build:sass build:js",
+    "build:sass": "sass --no-source-map --style=compressed src/stylesheets/app.scss:docs/stylesheets/app.css",
+    "build:js": "esbuild src/javascripts/app.js --bundle --minify --outfile=docs/javascripts/app.js",
+    "build:html": "eleventy",
+    "clean": "rimraf docs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "npm-run-all2": "^7.0.0",
+    "rimraf": "^6.0.0",
+    "sass": "^1.80.0"
   }
 }
