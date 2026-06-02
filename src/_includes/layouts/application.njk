@@ -2,8 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <!-- Flag set before paint so the auto-sized headings start hidden (see app.scss). -->
+    <script>document.documentElement.className += ' fonts-loading';</script>
     <title>Jake Fleming - Product Designer</title>
     <meta name="description" content="Jake Fleming is a Product Designer with specialties in Visual Design, Illustration, and Front-end coding">
+
+    <!-- Preload every web font so they're all ready before first paint and content reveals fast. -->
+    <link rel="preload" href="fonts/Industrious-WideBlack.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Obviously-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Obviously-Extended.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Obviously-Narrow_Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Gooper0.2-BoldItalic.woff2" as="font" type="font/woff2" crossorigin>
+
     <link rel="stylesheet" href="stylesheets/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -48,22 +58,51 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="javascripts/app.js"></script>
       <script>
-        var ftw = new FontToWidth({
-      		elements:'.ftw h3',
-      		fonts: fonts
-          });
+        (function () {
+          var docEl = document.documentElement;
 
-          var stw = new FontToWidth({elements: '.stw .resize'});
+          function start() {
+            // Only run once, even if both the font promise and the safety net fire.
+            if (!docEl.classList.contains('fonts-loading')) return;
 
-          var remix = function() {
-              $.each($('form').serializeArray(), function(i, item) {
-                  ftw.options[item.name] = parseFloat(item.value) || item.value;
+            // Scale the display headings to fill their container.
+            var stw = new FontToWidth({ elements: '.stw .resize' });
+
+            // Multi-font fitter — only matches on pages that have `.ftw h3`.
+            var ftw = new FontToWidth({ elements: '.ftw h3', fonts: fonts });
+
+            var remix = function () {
+              $.each($('form').serializeArray(), function (i, item) {
+                ftw.options[item.name] = parseFloat(item.value) || item.value;
               });
               ftw.updateWidths();
-          };
+            };
+            $('input').on('change', remix);
+            remix();
 
-          $('input').on('change', remix);
-          remix();
+            // Fonts are loaded and headings are measured — reveal them.
+            docEl.classList.remove('fonts-loading');
+          }
+
+          // Wait until every web font is actually loaded before revealing, so
+          // no text is shown in a fallback and the headings are measured once
+          // against the real font (never fitted to the fallback and re-fitted).
+          if (document.fonts && document.fonts.load) {
+            Promise.all([
+              document.fonts.load('1em "Industrious"'),
+              document.fonts.load('1em "Obviously"'),
+              document.fonts.load('1em "Obviously Extended"'),
+              document.fonts.load('1em "Obviously Narrow"'),
+              document.fonts.load('1em "Gooper Bold Italic"')
+            ]).then(start, start);
+            // Safety net: reveal anyway if a font never resolves.
+            setTimeout(start, 3000);
+          } else if (document.readyState === 'complete') {
+            start();
+          } else {
+            window.addEventListener('load', start);
+          }
+        })();
       </script>
     {% endblock %}
   </body>
