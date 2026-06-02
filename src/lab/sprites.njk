@@ -1,0 +1,123 @@
+{#
+  Hidden lab page — not linked from anywhere and flagged noindex.
+  Reproduces the home page's CSS sprite-sheet animations using *pure SVG*:
+  each animation is an <svg> viewport exactly one frame wide, with the
+  original sprite sheet placed inside as an <image> and stepped through its
+  frames by a SMIL <animateTransform calcMode="discrete">. No background-
+  position trick, no JavaScript — the motion lives entirely in the SVG.
+#}
+
+{% extends 'layouts/application.njk' %}
+
+{#
+  Render one pure-SVG sprite animation.
+  file  — sprite sheet basename in /images (a horizontal strip of frames)
+  frames, size — frame count and per-frame px (sheet width = size * frames)
+  dur   — full loop duration (matches the original CSS animation)
+#}
+{% macro spriteSVG(file, frames, size, dur, label) %}
+<svg class="sprite" width="{{ size }}" height="{{ size }}" viewBox="0 0 {{ size }} {{ size }}"
+     overflow="hidden" role="img" aria-label="{{ label }}">
+  <g>
+    <animateTransform attributeName="transform" attributeType="XML" type="translate"
+      calcMode="discrete" dur="{{ dur }}" repeatCount="indefinite"
+      values="{% for i in range(0, frames) %}{{ (0 - i) * size }},0{% if not loop.last %};{% endif %}{% endfor %}"/>
+    <image href="/images/{{ file }}.svg" xlink:href="/images/{{ file }}.svg"
+           width="{{ size * frames }}" height="{{ size }}"/>
+  </g>
+</svg>
+{% endmacro %}
+
+{% block head %}
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    .lab {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+    .lab__intro {
+      font-family: "Obviously Narrow", sans-serif;
+      color: #555;
+      max-width: 38rem;
+      margin: 0 auto 3rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .lab__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+    .lab__cell {
+      background: #fff;
+      border: 1px solid #ececec;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 1rem;
+      min-height: 240px;
+    }
+    .lab__cell .sprite {
+      display: block;
+    }
+    /* artdesign frames are 200px — let it size to its own viewport */
+    .lab__name {
+      font-family: "Obviously Narrow", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-size: 13px;
+      color: #888;
+      margin-top: .75rem;
+    }
+    .lab__name code { color: #FB3600; }
+  </style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="section">
+    <div class="lab">
+      <div class="stw p-relative">
+        <h3 class="text-center resize">Pure SVG</h3>
+      </div>
+      <p class="lab__intro">
+        The same characters from the home page, but no longer CSS sprite sheets
+        stepped with <code>background-position</code>. Each one here is an inline
+        <code>&lt;svg&gt;</code> framed to a single cell, with the original sprite
+        strip stepped through its frames by a SMIL
+        <code>&lt;animateTransform&gt;</code> — no JavaScript, no CSS animation.
+      </p>
+
+      <div class="lab__grid">
+        <div class="lab__cell">
+          {{ spriteSVG("guy-jogging", 8, 160, "0.6s", "A figure jogging") }}
+          <span class="lab__name">guy-jogging</span>
+        </div>
+        <div class="lab__cell">
+          {{ spriteSVG("csshtml-walking", 8, 160, "0.6s", "CSS &amp; HTML character walking") }}
+          <span class="lab__name">csshtml-walking</span>
+        </div>
+        <div class="lab__cell">
+          {{ spriteSVG("perfection-walking", 4, 160, "0.3s", "Perfection character walking") }}
+          <span class="lab__name">perfection-walking</span>
+        </div>
+        <div class="lab__cell">
+          {{ spriteSVG("sanity-hopping", 5, 160, "0.4s", "Sanity character hopping") }}
+          <span class="lab__name">sanity-hopping</span>
+        </div>
+        <div class="lab__cell">
+          {{ spriteSVG("js-flying", 5, 160, "0.5s", "JavaScript character flying") }}
+          <span class="lab__name">js-flying</span>
+        </div>
+        <div class="lab__cell">
+          {{ spriteSVG("artdesign-crawling", 5, 200, "0.5s", "Art &amp; design character crawling") }}
+          <span class="lab__name">artdesign-crawling</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
