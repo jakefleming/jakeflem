@@ -5,7 +5,7 @@
 // to target canvas, a game engine, etc. The character data travels untouched.
 // ─────────────────────────────────────────────────────────────────────────
 import { bones, drawOrder, joints, palette as defaultPalette } from './skeleton.js';
-import { poses, clips } from './poses.js';
+import { poses, clips, shadowTrack } from './poses.js';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const svg = (tag, attrs = {}) => {
@@ -38,7 +38,7 @@ function makeShape(name, pal) {
   g.appendChild(svg('line', { x1: 0, y1: 0, x2, y2, stroke: pal[b.color] || pal.ink, 'stroke-width': b.width, 'stroke-linecap': 'round' }));
   // accents: orange shirt over the torso, orange toe on the feet
   if (name === 'torso') {
-    g.appendChild(svg('line', { x1: 0, y1: -10, x2: 0, y2: -38, stroke: pal.pop, 'stroke-width': b.width - 12, 'stroke-linecap': 'round' }));
+    g.appendChild(svg('line', { x1: 0, y1: -6, x2: 0, y2: -40, stroke: pal.pop, 'stroke-width': b.width - 6, 'stroke-linecap': 'round' }));
   }
   if (name === 'footF' || name === 'footB') {
     g.appendChild(svg('line', { x1: x2 - 7, y1: 0, x2, y2: 0, stroke: pal.pop, 'stroke-width': b.width, 'stroke-linecap': 'round' }));
@@ -85,7 +85,8 @@ export function buildRig(pal = defaultPalette) {
 }
 
 // Compile a clip into one @keyframes block per animated bone (transform tracks
-// interpolate natively, no @property needed).
+// interpolate natively, no @property needed). Loop clips wrap back to their
+// first sample; one-shot clips end on their final sample.
 function compileClip(clipName, clip) {
   const kfs = [...clip.keyframes].sort((a, b) => a.t - b.t);
   let css = '';
@@ -97,10 +98,22 @@ function compileClip(clipName, clip) {
       return `transform:${boneTransform(name, angle, ty)};`;
     };
     for (const kf of kfs) body += `${(kf.t * 100).toFixed(2)}%{${frame(kf)}}`;
-    body += `100%{${frame(kfs[0])}}`; // loop seamlessly back to the first sample
+    if (clip.loop) body += `100%{${frame(kfs[0])}}`; // seamless wrap
+    else if (kfs[kfs.length - 1].t < 1) body += `100%{${frame(kfs[kfs.length - 1])}}`;
     css += `@keyframes cg-${clipName}-${name}{${body}}`;
   }
+  // optional shadow track (scale + fade as the body leaps)
+  const track = shadowTrack[clipName];
+  if (track) {
+    let body = '';
+    for (const k of track) body += `${(k.t * 100).toFixed(2)}%{transform:scale(${k.scale});opacity:${k.opacity};}`;
+    css += `@keyframes cg-${clipName}-shadow{${body}}`;
+  }
   return css;
+}
+
+function compileAll() {
+  return Object.keys(clips).map((name) => compileClip(name, clips[name])).join('');
 }
 
 const baseCSS = `
@@ -125,9 +138,11 @@ export class CharacterRig extends HTMLElement {
   _build() {
     const shadow = this.attachShadow({ mode: 'open' });
     const style = document.createElement('style');
-    style.textContent = baseCSS + compileClip('run', clips.run);
+    style.textContent = baseCSS + compileAll();
     const { svg: root, groups } = buildRig();
     this._groups = groups;
+    this._shadow = root.querySelector('.rig-shadow');
+    this._base = 'idle'; // the sustained pose to return to after a one-shot
     shadow.append(style, root);
     this._built = true;
     this.setPose('idle');
@@ -135,8 +150,8 @@ export class CharacterRig extends HTMLElement {
 
   // ── public API (the same surface a factory wrapper would expose) ──
   setPose(name) {
-    this.stop();
     const pose = poses[name] || poses.idle;
+    if (this._shadow) this._shadow.style.animation = '';
     for (const j of [...joints, 'root']) {
       const angle = j === 'root' ? 0 : (pose[j] || 0);
       const ty = j === 'root' ? (pose.root && pose.root.ty) || 0 : 0;
@@ -145,21 +160,44 @@ export class CharacterRig extends HTMLElement {
     }
   }
 
+  // Start a looping clip (idle/run). One-shot clips should use play() too but
+  // are normally reached via jump().
   play(clipName) {
     const clip = clips[clipName];
     if (!clip) return;
+    const iter = clip.loop ? 'infinite' : '1';
+    const fill = clip.loop ? 'none' : 'forwards';
     for (const j of [...joints, 'root']) {
       this._groups[j].style.transform = '';
-      this._groups[j].style.animation = `cg-${clipName}-${j} ${clip.duration}s linear infinite`;
+      this._groups[j].style.animation = `cg-${clipName}-${j} ${clip.duration}s linear 0s ${iter} normal ${fill}`;
     }
+    if (this._shadow) {
+      this._shadow.style.animation = shadowTrack[clipName]
+        ? `cg-${clipName}-shadow ${clip.duration}s linear 0s ${iter} normal ${fill}`
+        : '';
+    }
+  }
+
+  // One-shot leap, then return to whatever sustained pose was active.
+  jump() {
+    if (!this._built || this._jumping) return;
+    this._jumping = true;
+    this.play('jump');
+    this._groups.torso.addEventListener('animationend', () => {
+      this._jumping = false;
+      this._apply(this._base);
+    }, { once: true });
   }
 
   stop() {
     if (!this._groups) return;
     for (const j of [...joints, 'root']) this._groups[j].style.animation = '';
+    if (this._shadow) this._shadow.style.animation = '';
   }
 
   _apply(name) {
+    if (name === 'jump') { this.jump(); return; }
+    this._base = name;
     if (clips[name]) this.play(name);
     else this.setPose(name);
   }

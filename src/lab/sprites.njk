@@ -112,6 +112,18 @@
       border-color: #FB3600;
       color: #fff;
     }
+    .lab__hint {
+      margin-top: .75rem;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .lab__hint kbd {
+      font-family: inherit;
+      background: #f3f3f3;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 6px;
+    }
   </style>
   <script defer src="/javascripts/character.js"></script>
 {% endblock %}
@@ -176,7 +188,9 @@
         <div class="rig-controls" role="group" aria-label="Pose">
           <button type="button" data-pose="idle" aria-pressed="true">Idle</button>
           <button type="button" data-pose="run" aria-pressed="false">Run</button>
+          <button type="button" data-action="jump">Jump</button>
         </div>
+        <p class="lab__hint">tip: press <kbd>space</kbd> to jump</p>
       </div>
     </div>
   </section>
@@ -185,14 +199,19 @@
 <script>
   (function () {
     var guy = document.getElementById('guy');
-    var buttons = document.querySelectorAll('.rig-controls button');
-    buttons.forEach(function (btn) {
+    var poseButtons = document.querySelectorAll('.rig-controls button[data-pose]');
+    poseButtons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         guy.setAttribute('pose', btn.dataset.pose);
-        buttons.forEach(function (b) {
+        poseButtons.forEach(function (b) {
           b.setAttribute('aria-pressed', String(b === btn));
         });
       });
+    });
+    var jumpBtn = document.querySelector('.rig-controls button[data-action="jump"]');
+    if (jumpBtn) jumpBtn.addEventListener('click', function () { guy.jump(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.code === 'Space' && guy.jump) { e.preventDefault(); guy.jump(); }
     });
   })();
 </script>
