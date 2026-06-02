@@ -1,16 +1,22 @@
 @import 'spectre/spectre';
 
 // fonts
+// `font-display: swap` paints text immediately in the fallback and swaps in
+// the web font as soon as it arrives (no invisible-text period). The big
+// auto-sized headings are additionally hidden until their font is measured —
+// see the `.fonts-loading` rule below — so they never visibly re-fit.
 @font-face {
   font-family: "Industrious";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/Industrious-WideBlack.woff2") format("woff2"),
-       url("../fonts/BIndustrious-WideBlack.woff") format("woff");
+       url("../fonts/Industrious-WideBlack.woff") format("woff");
 }
 
 @font-face {
   font-family: "Obviously Extended";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/Obviously-Extended.woff2") format("woff2"),
        url("../fonts/Obviously-Extended.woff") format("woff");
 }
@@ -18,6 +24,7 @@
 @font-face {
   font-family: "Obviously";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/Obviously-Regular.woff2") format("woff2"),
        url("../fonts/Obviously-Regular.woff") format("woff");
 }
@@ -25,6 +32,7 @@
 @font-face {
   font-family: "Obviously Narrow";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/Obviously-Narrow_Medium.woff2") format("woff2"),
        url("../fonts/Obviously-Narrow_Medium.woff") format("woff");
 }
@@ -32,14 +40,35 @@
 @font-face {
   font-family: "Gooper Bold Italic";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/Gooper0.2-BoldItalic.woff2") format("woff2"),
        url("../fonts/Gooper0.2-BoldItalic.woff") format("woff");
+}
+
+// The display headings are scaled to fit by FontToWidth. Keep them invisible
+// (their box still reserves space) until the web font is loaded and measured,
+// so the user never sees the fallback font get fitted and then swapped. The
+// `fonts-loading` class is set in <head> and removed by JS once ready; if JS
+// is unavailable the headings simply render normally.
+// Hold all page content until the web fonts are loaded, then fade it in, so
+// no text is ever shown in a fallback font and swapped. JS removes the
+// `fonts-loading` class once the fonts are ready (with a 3s safety net); the
+// `html` background matches `body` so the page shows a solid colour — not a
+// white flash — while content is held.
+html {
+  background: #f8f8f8;
 }
 
 body {
   font-family: "Obviously";
   font-feature-settings: "salt";
   background: #f8f8f8;
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+.fonts-loading body {
+  opacity: 0;
 }
 
 main {
