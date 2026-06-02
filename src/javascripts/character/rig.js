@@ -21,39 +21,34 @@ function boneTransform(name, angle, ty = 0) {
   return `translate(${px}px, ${py}px) rotate(${angle}deg)`;
 }
 
-// Draw the chibi head: orange face, big puffy black hair, brows, dot eyes,
-// cheeks and a smile. Head-local origin sits at the neck; the face is above it.
-function makeHead(pal) {
+// The head is the character's identity (face, hair, expression) and is nearly
+// rigid across the run, so we use the ORIGINAL artwork verbatim — lifted from
+// guy-jogging.svg — to match it exactly. Coordinates are in the source frame's
+// space (face centred at 91,61); the wrapper transform scales it and moves the
+// face centre to the head bone's local origin. ink #000001 / skin #FB3600.
+const HEAD_ART = `<g transform="translate(0 -46) scale(1.85) translate(-91 -61)">
+  <path d="M68.2,67.7C72.5,83.5,89.6,90,92.5,88.2s-3-9.7-3-9.7S76.9,64.8,68.2,67.7z" fill="#000001"/>
+  <path d="M78,79c0,6.6-3,12.8-8,17l-7-7C63,89,74,76,78,79z" fill="#000001"/>
+  <circle cx="91.1" cy="61" r="21" fill="#FB3600" stroke="#000001" stroke-width="3"/>
+  <ellipse transform="matrix(0.9519 -0.3065 0.3065 0.9519 -12.2794 23.8006)" cx="69.6" cy="51" rx="4" ry="5.5" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.2152 67.708)" cx="80.1" cy="37.7" rx="13.3" ry="6.2" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <ellipse transform="matrix(0.9519 -0.3065 0.3065 0.9519 -5.9717 31.4391)" cx="97.1" cy="34.7" rx="13.3" ry="6.2" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <ellipse transform="matrix(0.34 -0.9404 0.9404 0.34 20.6149 114.8431)" cx="92.1" cy="42.7" rx="6.2" ry="13.3" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <ellipse transform="matrix(0.9968 -0.08011194 0.08011194 0.9968 -3.2491 8.4853)" cx="104.1" cy="44.7" rx="13.3" ry="6.2" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <path d="M73.8,68.9c-4.1,1.7-8.8-0.1-10.5-4.2c-1.7-4.1,0.1-8.8,4.2-10.5c2-0.9,4.3-0.9,6.3,0" fill="#FB3600" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <ellipse transform="matrix(0.9519 -0.3065 0.3065 0.9519 -12.958 25.4773)" cx="74.6" cy="54" rx="4" ry="5.5" fill="#000001" stroke="#000001" stroke-width="3"/>
+  <path d="M85.2,53.7c1-1.8,3.2-2.4,5-1.5" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <path d="M104.1,53.7c-1-1.8-3.2-2.4-5-1.5" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <path d="M86.5,58.4c1.2-1.2,3.1-1.2,4.2,0" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <path d="M98.5,58.4c1.2-1.2,3.1-1.2,4.2,0" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <path d="M96.8,65.4c-1.2,1.2-3.1,1.2-4.2,0" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="83.6" cy="64.5" r="1" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="105.6" cy="64.5" r="1" fill="none" stroke="#000001" stroke-width="3" stroke-linecap="round"/>
+</g>`;
+
+function makeHead() {
   const g = svg('g');
-  const ink = pal.ink, skin = pal.skin;
-  // face (round), with the orange ear on the back (left) side
-  g.appendChild(svg('ellipse', { cx: 2, cy: -30, rx: 39, ry: 40, fill: skin, stroke: ink, 'stroke-width': 4 }));
-  g.appendChild(svg('ellipse', { cx: -36, cy: -8, rx: 9, ry: 13, fill: skin, stroke: ink, 'stroke-width': 4 }));
-  // styled black hair — a swept quiff: volume up and back, fringe across the
-  // forehead with a small curl at the front, sideburn down the back side.
-  const hair = svg('g', { fill: ink, stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round' });
-  hair.appendChild(svg('path', {
-    d: 'M -28,-30 C -44,-42 -46,-72 -20,-83 C 2,-92 30,-88 42,-72 '
-     + 'C 50,-61 49,-51 41,-48 C 38,-57 30,-59 24,-53 C 23,-49 25,-46 21,-46 '
-     + 'C 11,-53 -7,-55 -19,-49 C -25,-46 -27,-39 -29,-30 Z',
-  }));
-  // sideburn curl swooping down past the ear on the back side
-  hair.appendChild(svg('path', { d: 'M -29,-34 C -38,-28 -40,-16 -33,-12 C -30,-19 -27,-25 -24,-31 Z' }));
-  g.appendChild(hair);
-  // two little forehead bangs poking down into the orange
-  g.appendChild(svg('path', { d: 'M -14,-50 q 7,9 14,1', fill: ink, stroke: ink, 'stroke-width': 2 }));
-  g.appendChild(svg('path', { d: 'M 2,-50 q 7,8 13,1', fill: ink, stroke: ink, 'stroke-width': 2 }));
-  // brows (facing +x / right)
-  g.appendChild(svg('path', { d: 'M -16,-26 Q -9,-31 -2,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
-  g.appendChild(svg('path', { d: 'M 12,-26 Q 19,-31 26,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
-  // dot eyes
-  g.appendChild(svg('circle', { cx: -9, cy: -16, r: 3.2, fill: ink }));
-  g.appendChild(svg('circle', { cx: 19, cy: -16, r: 3.2, fill: ink }));
-  // cheeks
-  g.appendChild(svg('circle', { cx: -20, cy: -3, r: 2.2, fill: ink }));
-  g.appendChild(svg('circle', { cx: 30, cy: -3, r: 2.2, fill: ink }));
-  // cheerful open smile
-  g.appendChild(svg('path', { d: 'M 0,-7 Q 10,7 20,-7 Q 10,-1 0,-7 Z', fill: ink }));
+  g.innerHTML = HEAD_ART;
   return g;
 }
 
