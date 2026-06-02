@@ -80,9 +80,11 @@ function makeShape(name, pal) {
   }
 
   if (b.kind === 'body') {
-    g.appendChild(line(b.width, pal.ink)); // black body
-    // small white collar peeking at the neckline
-    g.appendChild(svg('path', { d: 'M 0,-33 L 9,-21 Q 0,-18 -9,-21 Z', fill: pal.paper, stroke: pal.ink, 'stroke-width': 3, 'stroke-linejoin': 'round' }));
+    // white shirt = black outline (wide stroke) under a narrower white stroke
+    g.appendChild(line(b.width, pal.ink));
+    g.appendChild(line(b.width - 6, pal.paper));
+    // the head casts a black shadow over the top of the shirt
+    g.appendChild(svg('ellipse', { cx: 1, cy: -18, rx: b.width / 2 - 5, ry: 11, fill: pal.ink }));
     return g;
   }
 
@@ -109,12 +111,13 @@ export function buildRig(pal = defaultPalette) {
   shape('armF'); link('armF', 'forearmF'); shape('forearmF');
   shape('thighF'); link('thighF', 'shinF'); shape('shinF'); link('shinF', 'footF'); shape('footF');
 
-  // torso: back arm BEHIND the torso shape, head + front arm IN FRONT
+  // torso z-order: back arm BEHIND the shirt, then shirt, then front arm in
+  // front of the shirt but BEHIND the head (so the arm never covers the face).
   groups.torso.appendChild(groups.armB);
   groups.torso.appendChild(makeShape('torso', pal));
+  groups.torso.appendChild(groups.armF);
   groups.torso.appendChild(groups.head);
   groups.head.appendChild(makeShape('head', pal));
-  groups.torso.appendChild(groups.armF);
 
   // root: back leg, torso, front leg
   groups.root.appendChild(groups.thighB);

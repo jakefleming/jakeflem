@@ -19,16 +19,16 @@ export const palette = {
 export const bones = {
   root: { parent: null, pivot: [0, 0] },
 
-  // short chunky black body
-  torso: { parent: 'root', pivot: [0, 0], tip: [0, -36], width: 56, kind: 'body' },
-  head: { parent: 'torso', pivot: [0, -36], type: 'head', radius: 40 },
+  // short, squat white-shirt body (with a black outline + the head's shadow)
+  torso: { parent: 'root', pivot: [0, 2], tip: [0, -26], width: 52, kind: 'body' },
+  head: { parent: 'torso', pivot: [0, -26], type: 'head', radius: 40 },
 
-  // arms are orange (skin) with a white sleeve cuff at the shoulder; round
-  // "mitten" hands come free from the round stroke caps.
-  armB: { parent: 'torso', pivot: [-3, -38], tip: [0, 24], width: 26, kind: 'skin' },
-  forearmB: { parent: 'armB', pivot: [0, 24], tip: [0, 22], width: 24, kind: 'skin' },
-  armF: { parent: 'torso', pivot: [4, -38], tip: [0, 24], width: 28, kind: 'skin' },
-  forearmF: { parent: 'armF', pivot: [0, 24], tip: [0, 22], width: 26, kind: 'skin' },
+  // arms are orange (skin) with a white sleeve at the shoulder; round "mitten"
+  // hands come free from the round stroke caps. Shoulders sit low on the body.
+  armB: { parent: 'torso', pivot: [-7, -20], tip: [0, 24], width: 31, kind: 'skin' },
+  forearmB: { parent: 'armB', pivot: [0, 24], tip: [0, 22], width: 29, kind: 'skin' },
+  armF: { parent: 'torso', pivot: [7, -20], tip: [0, 24], width: 33, kind: 'skin' },
+  forearmF: { parent: 'armF', pivot: [0, 24], tip: [0, 22], width: 31, kind: 'skin' },
 
   // short black legs ending in chunky shoes
   thighB: { parent: 'root', pivot: [-6, 2], tip: [0, 19], width: 25, kind: 'leg' },
