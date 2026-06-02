@@ -47,13 +47,13 @@ function makeHead(pal) {
   g.appendChild(svg('path', { d: 'M -16,-26 Q -9,-31 -2,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
   g.appendChild(svg('path', { d: 'M 12,-26 Q 19,-31 26,-27', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }));
   // dot eyes
-  g.appendChild(svg('circle', { cx: -9, cy: -16, r: 3, fill: ink }));
-  g.appendChild(svg('circle', { cx: 19, cy: -16, r: 3, fill: ink }));
+  g.appendChild(svg('circle', { cx: -9, cy: -16, r: 3.2, fill: ink }));
+  g.appendChild(svg('circle', { cx: 19, cy: -16, r: 3.2, fill: ink }));
   // cheeks
-  g.appendChild(svg('circle', { cx: -20, cy: -4, r: 2, fill: ink }));
-  g.appendChild(svg('circle', { cx: 30, cy: -4, r: 2, fill: ink }));
-  // open smile
-  g.appendChild(svg('path', { d: 'M 3,-6 Q 10,4 17,-6 Q 10,-3 3,-6 Z', fill: ink }));
+  g.appendChild(svg('circle', { cx: -20, cy: -3, r: 2.2, fill: ink }));
+  g.appendChild(svg('circle', { cx: 30, cy: -3, r: 2.2, fill: ink }));
+  // cheerful open smile
+  g.appendChild(svg('path', { d: 'M 0,-7 Q 10,7 20,-7 Q 10,-1 0,-7 Z', fill: ink }));
   return g;
 }
 
@@ -77,19 +77,17 @@ function makeShape(name, pal) {
     g.appendChild(line(b.width, pal.ink)); // outline
     g.appendChild(line(b.width - 8, pal.skin)); // orange fill
     if (name === 'armF' || name === 'armB') {
-      // white sleeve cuff at the shoulder
-      const cuff = (w, color) => svg('line', { x1: 0, y1: 0, x2: 0, y2: 11, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round' });
-      g.appendChild(cuff(b.width, pal.ink));
-      g.appendChild(cuff(b.width - 8, pal.paper));
+      // white sleeve covering the upper ~half of the arm (the arm's black
+      // outline shows around it); orange forearm/hand below
+      g.appendChild(svg('line', { x1: 0, y1: 0, x2: 0, y2: 15, stroke: pal.paper, 'stroke-width': b.width - 8, 'stroke-linecap': 'round' }));
     }
     return g;
   }
 
   if (b.kind === 'body') {
     g.appendChild(line(b.width, pal.ink)); // black body
-    // white shirt showing as a diagonal sash across the chest
-    g.appendChild(svg('line', { x1: 10, y1: -22, x2: -6, y2: -6, stroke: pal.ink, 'stroke-width': 15, 'stroke-linecap': 'round' }));
-    g.appendChild(svg('line', { x1: 10, y1: -22, x2: -6, y2: -6, stroke: pal.paper, 'stroke-width': 9, 'stroke-linecap': 'round' }));
+    // small white collar peeking at the neckline
+    g.appendChild(svg('path', { d: 'M 0,-33 L 9,-21 Q 0,-18 -9,-21 Z', fill: pal.paper, stroke: pal.ink, 'stroke-width': 3, 'stroke-linejoin': 'round' }));
     return g;
   }
 
