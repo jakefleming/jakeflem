@@ -61,7 +61,7 @@ function makeShape(name, pal) {
   if (b.type === 'head') return makeHead(pal);
 
   if (b.type === 'shoe') {
-    g.appendChild(svg('ellipse', { cx: 8, cy: 4, rx: 23, ry: 14, fill: pal.ink, stroke: pal.ink, 'stroke-width': 4 }));
+    g.appendChild(svg('ellipse', { cx: 9, cy: 5, rx: 26, ry: 15, fill: pal.ink, stroke: pal.ink, 'stroke-width': 4 }));
     return g;
   }
 
@@ -123,7 +123,7 @@ export function buildRig(pal = defaultPalette) {
   groups.root.appendChild(groups.thighF);
 
   const root = svg('svg', { viewBox: '0 0 220 250', class: 'rig-svg' });
-  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 110, cy: 201, rx: 52, ry: 10, fill: pal.ink }));
+  root.appendChild(svg('ellipse', { class: 'rig-shadow', cx: 110, cy: 201, rx: 56, ry: 11, fill: pal.ink }));
   const anchor = svg('g', { transform: 'translate(110 150)' });
   anchor.appendChild(groups.root);
   root.appendChild(anchor);

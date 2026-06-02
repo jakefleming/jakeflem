@@ -32,36 +32,35 @@ export const clips = {
     ],
   },
 
-  // Side-view jog matching the source: forward lean, arms pump nearly
-  // horizontal at chest height (fist forward / fist back), legs splay in a
-  // clear stride. The near arm + near leg lead together (stylised/ipsilateral,
-  // as in the original art). t=0 reproduces frame 1.
+  // Side-view jog reproducing the source's frame 1 at the contact poses:
+  // front arm forward-DOWN + back arm back-DOWN (fists at belly height, off the
+  // torso so the white shirt shows), front leg planted near-vertical, back leg
+  // kicked back ~45°, hard forward lean.
   run: {
     duration: 0.6,
     loop: true,
     keyframes: [
-      // contact (frame-1 pose): near leg planted forward, far leg back; both
-      // arms bent ~90° pumping — near fist up/forward, far fist up/back.
-      // arms reach OUT to the sides (forward-right / back-left) at chest height
-      // — NOT across the chest — so the white shirt panel stays fully visible.
-      { t: 0.0, root: { ty: 0 }, torso: 23, head: -11,
-        armF: -74, forearmF: -16, armB: 74, forearmB: 16,
-        thighF: -42, shinF: 18, footF: -10,
-        thighB: 48, shinB: 40, footB: 18 },
+      // moderate forward lean + open scissor: front leg planted forward, REAR
+      // leg extended fairly straight back (a push-off, not a fold), arms drive
+      // forward-down / back-down off the torso.
+      { t: 0.0, root: { ty: 0 }, torso: 16, head: -3,
+        armF: -60, forearmF: -16, armB: 68, forearmB: 14,
+        thighF: -30, shinF: 12, footF: -6,
+        thighB: 46, shinB: 14, footB: 10 },
       // passing: airborne lift, limbs gather under the body
-      { t: 0.25, root: { ty: -13 }, torso: 23, head: -11,
-        armF: -30, forearmF: 6, armB: 30, forearmB: 6,
-        thighF: 16, shinF: 44, footF: 4,
-        thighB: -14, shinB: 38, footB: 2 },
+      { t: 0.25, root: { ty: -14 }, torso: 16, head: -3,
+        armF: -20, forearmF: 16, armB: 26, forearmB: 16,
+        thighF: 16, shinF: 42, footF: 4,
+        thighB: -12, shinB: 34, footB: 2 },
       // contact (mirror)
-      { t: 0.5, root: { ty: 0 }, torso: 23, head: -11,
-        armF: 74, forearmF: 16, armB: -74, forearmB: -16,
-        thighF: 48, shinF: 40, footF: 18,
-        thighB: -42, shinB: 18, footB: -10 },
-      { t: 0.75, root: { ty: -13 }, torso: 23, head: -11,
-        armF: 30, forearmF: 6, armB: -30, forearmB: 6,
-        thighF: -14, shinF: 38, footF: 2,
-        thighB: 16, shinB: 44, footB: 4 },
+      { t: 0.5, root: { ty: 0 }, torso: 16, head: -3,
+        armF: 68, forearmF: 14, armB: -60, forearmB: -16,
+        thighF: 46, shinF: 14, footF: 10,
+        thighB: -30, shinB: 12, footB: -6 },
+      { t: 0.75, root: { ty: -14 }, torso: 16, head: -3,
+        armF: 26, forearmF: 16, armB: -20, forearmB: 16,
+        thighF: -12, shinF: 34, footF: 2,
+        thighB: 16, shinB: 42, footB: 4 },
     ],
   },
 
