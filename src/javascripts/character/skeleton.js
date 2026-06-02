@@ -20,8 +20,8 @@ export const bones = {
   root: { parent: null, pivot: [0, 0] },
 
   // short chunky black body
-  torso: { parent: 'root', pivot: [0, 0], tip: [0, -38], width: 52, kind: 'body' },
-  head: { parent: 'torso', pivot: [0, -38], type: 'head', radius: 40 },
+  torso: { parent: 'root', pivot: [0, 0], tip: [0, -36], width: 56, kind: 'body' },
+  head: { parent: 'torso', pivot: [0, -36], type: 'head', radius: 40 },
 
   // arms are orange (skin) with a white sleeve cuff at the shoulder; round
   // "mitten" hands come free from the round stroke caps.
@@ -31,12 +31,12 @@ export const bones = {
   forearmF: { parent: 'armF', pivot: [0, 24], tip: [0, 22], width: 26, kind: 'skin' },
 
   // short black legs ending in chunky shoes
-  thighB: { parent: 'root', pivot: [-6, 2], tip: [0, 22], width: 24, kind: 'leg' },
-  shinB: { parent: 'thighB', pivot: [0, 22], tip: [0, 18], width: 22, kind: 'leg' },
-  footB: { parent: 'shinB', pivot: [0, 18], type: 'shoe' },
-  thighF: { parent: 'root', pivot: [6, 2], tip: [0, 22], width: 26, kind: 'leg' },
-  shinF: { parent: 'thighF', pivot: [0, 22], tip: [0, 18], width: 24, kind: 'leg' },
-  footF: { parent: 'shinF', pivot: [0, 18], type: 'shoe' },
+  thighB: { parent: 'root', pivot: [-6, 2], tip: [0, 19], width: 25, kind: 'leg' },
+  shinB: { parent: 'thighB', pivot: [0, 19], tip: [0, 16], width: 23, kind: 'leg' },
+  footB: { parent: 'shinB', pivot: [0, 16], type: 'shoe' },
+  thighF: { parent: 'root', pivot: [6, 2], tip: [0, 19], width: 27, kind: 'leg' },
+  shinF: { parent: 'thighF', pivot: [0, 19], tip: [0, 16], width: 25, kind: 'leg' },
+  footF: { parent: 'shinF', pivot: [0, 16], type: 'shoe' },
 };
 
 // Painter's order (back to front). Transform hierarchy is independent of this.
