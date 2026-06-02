@@ -12,10 +12,12 @@
     "watch:eleventy": "eleventy --serve --quiet",
     "watch:sass": "sass --watch src/stylesheets/app.scss:docs/stylesheets/app.css",
     "watch:js": "esbuild src/javascripts/app.js --bundle --sourcemap --outfile=docs/javascripts/app.js --watch",
+    "watch:character": "esbuild src/javascripts/character/index.js --bundle --sourcemap --outfile=docs/javascripts/character.js --watch",
     "build": "npm-run-all clean build:assets build:html",
-    "build:assets": "npm-run-all --parallel build:sass build:js",
+    "build:assets": "npm-run-all --parallel build:sass build:js build:character",
     "build:sass": "sass --no-source-map --style=compressed src/stylesheets/app.scss:docs/stylesheets/app.css",
     "build:js": "esbuild src/javascripts/app.js --bundle --minify --outfile=docs/javascripts/app.js",
+    "build:character": "esbuild src/javascripts/character/index.js --bundle --minify --outfile=docs/javascripts/character.js",
     "build:html": "eleventy",
     "clean": "rimraf docs"
   },

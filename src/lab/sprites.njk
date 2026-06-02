@@ -73,7 +73,47 @@
       margin-top: .75rem;
     }
     .lab__name code { color: #FB3600; }
+
+    /* ── rigged character stage ── */
+    .rig-stage {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid #ececec;
+      text-align: center;
+    }
+    .rig-floor {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #ececec;
+      border-radius: 8px;
+      padding: 1rem 2rem 0;
+    }
+    character-rig { width: 240px; height: 264px; }
+    .rig-controls {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: .5rem;
+      justify-content: center;
+    }
+    .rig-controls button {
+      font-family: "Obviously Narrow", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-size: 13px;
+      padding: .5rem 1.25rem;
+      border: 2px solid #000001;
+      border-radius: 100px;
+      background: #fff;
+      color: #000001;
+      cursor: pointer;
+    }
+    .rig-controls button[aria-pressed="true"] {
+      background: #FB3600;
+      border-color: #FB3600;
+      color: #fff;
+    }
   </style>
+  <script defer src="/javascripts/character.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -117,7 +157,43 @@
           <span class="lab__name">artdesign-crawling</span>
         </div>
       </div>
+
+      <div class="rig-stage">
+        <div class="stw p-relative">
+          <h3 class="text-center resize">Rigged</h3>
+        </div>
+        <p class="lab__intro">
+          The jogging guy, rebuilt from scratch as a posable skeleton — nested
+          <code>&lt;g&gt;</code> "bones" rotated at their joints. The skeleton and
+          poses are plain data (angles + timing); CSS tweens between them. Drop-in
+          anywhere as <code>&lt;character-rig&gt;</code>.
+        </p>
+
+        <div class="rig-floor">
+          <character-rig id="guy" pose="idle"></character-rig>
+        </div>
+
+        <div class="rig-controls" role="group" aria-label="Pose">
+          <button type="button" data-pose="idle" aria-pressed="true">Idle</button>
+          <button type="button" data-pose="run" aria-pressed="false">Run</button>
+        </div>
+      </div>
     </div>
   </section>
 </main>
+
+<script>
+  (function () {
+    var guy = document.getElementById('guy');
+    var buttons = document.querySelectorAll('.rig-controls button');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        guy.setAttribute('pose', btn.dataset.pose);
+        buttons.forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+      });
+    });
+  })();
+</script>
 {% endblock %}
