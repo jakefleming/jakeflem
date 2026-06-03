@@ -1,14 +1,16 @@
 @import 'spectre/spectre';
 
 // fonts
-// `font-display: swap` paints text immediately in the fallback and swaps in
-// the web font as soon as it arrives (no invisible-text period). The big
-// auto-sized headings are additionally hidden until their font is measured —
-// see the `.fonts-loading` rule below — so they never visibly re-fit.
+// The whole page is held at opacity 0 (`.fonts-loading body`) until JS confirms
+// every web font has loaded, so text is never painted in a fallback. Paired with
+// that gate we use `font-display: block`: while loading, glyphs render invisibly
+// (never as a fallback that could flash), then show the web font once ready. The
+// big auto-sized headings are measured against the real font before reveal — see
+// the `.fonts-loading` rule below — so they never visibly re-fit.
 @font-face {
   font-family: "Industrious";
   font-style: normal;
-  font-display: swap;
+  font-display: block;
   src: url("../fonts/Industrious-WideBlack.woff2") format("woff2"),
        url("../fonts/Industrious-WideBlack.woff") format("woff");
 }
@@ -16,7 +18,7 @@
 @font-face {
   font-family: "Obviously Extended";
   font-style: normal;
-  font-display: swap;
+  font-display: block;
   src: url("../fonts/Obviously-Extended.woff2") format("woff2"),
        url("../fonts/Obviously-Extended.woff") format("woff");
 }
@@ -24,7 +26,7 @@
 @font-face {
   font-family: "Obviously";
   font-style: normal;
-  font-display: swap;
+  font-display: block;
   src: url("../fonts/Obviously-Regular.woff2") format("woff2"),
        url("../fonts/Obviously-Regular.woff") format("woff");
 }
@@ -32,7 +34,7 @@
 @font-face {
   font-family: "Obviously Narrow";
   font-style: normal;
-  font-display: swap;
+  font-display: block;
   src: url("../fonts/Obviously-Narrow_Medium.woff2") format("woff2"),
        url("../fonts/Obviously-Narrow_Medium.woff") format("woff");
 }
@@ -40,7 +42,7 @@
 @font-face {
   font-family: "Gooper Bold Italic";
   font-style: normal;
-  font-display: swap;
+  font-display: block;
   src: url("../fonts/Gooper0.2-BoldItalic.woff2") format("woff2"),
        url("../fonts/Gooper0.2-BoldItalic.woff") format("woff");
 }
