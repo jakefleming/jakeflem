@@ -582,10 +582,11 @@ a {
   .container { max-width: 720px; }
   h1, h3 { font-family: "VC Henrietta"; font-weight: 400; line-height: 1; letter-spacing: -.01em; }
   h1 { font-size: 96px; line-height: .9; margin: 0; }
-  .resume-head { display: flex; align-items: baseline; gap: 2rem; flex-wrap: wrap; }
-  .resume-head-meta { margin-left: auto; text-align: right; }
-  .resume-head-meta .resume-links { margin-top: .25rem; }
-  @media (max-width: 600px) { .resume-head-meta { margin-left: 0; text-align: left; } }
+  .resume-head { display: flex; align-items: last baseline; gap: 2.5rem; }
+  .resume-head h1 { flex: none; }
+  .resume-head-meta { flex: none; }
+  .resume-head-meta .resume-meta { margin: 0; line-height: 1.5; }
+  @media (max-width: 600px) { .resume-head { display: block; } .resume-head-meta { text-align: left; margin-top: 1rem; } }
   h3 { font-size: 48px; margin: 0 0 1.25rem; }
   .resume-meta { margin: 0; white-space: nowrap; font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
   .resume-links { margin-top: .25rem; }
