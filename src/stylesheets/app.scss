@@ -570,6 +570,7 @@ a {
   .resume-growth { font-size: 10pt; line-height: 1.3; }
   .resume-growth p, .resume-growth li { font-size: 10pt; }
   .resume-growth .container { max-width: 640px; }
+  .resume-growth .section:not(.print-break) ul { max-width: 480px; }
   .resume-growth .section { padding-bottom: 0; }
   .resume-growth .resume-head { margin-bottom: 2.5rem; }
   .resume-growth h3 { font-size: 32px; margin-bottom: .5rem; }
