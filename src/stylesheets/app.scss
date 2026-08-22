@@ -541,7 +541,7 @@ a {
   font-family: "Obviously Extended";
   text-transform: uppercase;
   font-size: 18px;
-  a { color: inherit; }
+  a { font: inherit; text-transform: inherit; letter-spacing: inherit; color: inherit; border: 0; }
 }
 .resume .job-role { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; }
 .resume .job-when { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; margin-left: auto; color: $gray-color-dark; }
