@@ -527,7 +527,7 @@ a {
 }
 .resume .job {
   padding: 1.25rem 0;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid rgba($dark-color, .15);
   &:first-of-type { border-top: 0; }
   p { margin: .5rem 0 0; }
 }
@@ -543,5 +543,5 @@ a {
   font-size: 18px;
 }
 .resume .job-role { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; }
-.resume .job-when { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; margin-left: auto; color: $gray-color-dark; }
+.resume .job-when { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; margin-left: auto; color: rgba($dark-color, .55); }
 @media (max-width: 600px) { .resume .job-when { margin-left: 0; } }
