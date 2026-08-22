@@ -36,54 +36,42 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    <script>
-			var fonts = [
-				{ fontFamily: 'Arvo', 'font-weight': 700 },
-				'Wire One',
-				'Bitter',
-				'Holtwood One SC',
-				'Ubuntu Condensed',
-				'Krona One',
-				'Dorsa',
-				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 700 },
-				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 300 },
-				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 400 },
-				{ fontFamily: 'Yanone Kaffeesatz', 'font-weight': 200 },
-				{ fontFamily: 'Six Caps' },
-				{ fontFamily: 'Roboto Condensed' },
-			];
-		</script>
     {% block content %}{% endblock %}
     {% block javascript %}
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="/javascripts/app.js"></script>
       <script>
         (function () {
           var docEl = document.documentElement;
 
+          // Fit each `.stw .resize` heading to its container by scaling
+          // font-size only: measure the text once at its CSS size, then set
+          // font-size = available width / measured width. Runs again on resize.
+          function fit(el) {
+            el.style.fontSize = '';
+            el.style.whiteSpace = 'nowrap';
+            var cs = getComputedStyle(el);
+            var base = parseFloat(cs.fontSize);
+            var avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            var w = range.getBoundingClientRect().width;
+            if (w > 0 && avail > 0) el.style.fontSize = (base * avail / w) + 'px';
+          }
+          function fitAll() {
+            document.querySelectorAll('.stw .resize').forEach(fit);
+          }
+
           var started = false;
           function start() {
             if (started) return; // run once, whether triggered by fonts or the safety net
             started = true;
-
-            // Fit the display headings to their container. This is a
-            // progressive enhancement: if FontToWidth or jQuery is unavailable
-            // (e.g. the CDN fails), skip it — but always reveal the page so a
-            // failed dependency can never leave the site blank.
             try {
-              var stw = new FontToWidth({ elements: '.stw .resize' });
-
-              // Multi-font fitter — only matches on pages that have `.ftw h3`.
-              var ftw = new FontToWidth({ elements: '.ftw h3', fonts: fonts });
-
-              var remix = function () {
-                $.each($('form').serializeArray(), function (i, item) {
-                  ftw.options[item.name] = parseFloat(item.value) || item.value;
-                });
-                ftw.updateWidths();
-              };
-              $('input').on('change', remix);
-              remix();
+              fitAll();
+              var raf;
+              window.addEventListener('resize', function () {
+                cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(fitAll);
+              });
             } catch (e) { /* heading auto-fit is optional */ }
 
             docEl.classList.remove('fonts-loading');
