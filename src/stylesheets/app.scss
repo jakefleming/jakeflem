@@ -592,5 +592,10 @@ a {
   .resume-links { margin-top: .25rem; }
   .job-co { font-family: "VC Henrietta Condensed"; font-weight: 400; font-size: 26px; text-transform: none; letter-spacing: 0; }
   .job-role, .job-when { font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
+  .btn, .btn:hover, .btn:focus, .btn:active {
+    background: transparent; border: 0; border-left: 3px solid $dark-color; border-radius: 0;
+    color: $dark-color; box-shadow: none; font-family: "VC Nudge Text"; font-weight: 500; font-size: 14px;
+    text-transform: uppercase; letter-spacing: .04em; padding: .35rem 0 .35rem 1rem; height: auto; line-height: 1.4; text-decoration: none;
+  }
   a { font-family: inherit; color: inherit; text-decoration: underline; text-decoration-color: rgba($dark-color, .35); text-underline-offset: .15em; &:hover { text-decoration-color: currentColor; } }
 }
