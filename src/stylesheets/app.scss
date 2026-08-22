@@ -562,7 +562,10 @@ a {
   .resume h1, .resume h3, .resume h4 { page-break-after: avoid; }
   .resume li { margin-bottom: .25rem; }
   .resume a { text-decoration: none; }
-  .resume .btn { display: none !important; }
+  .resume-growth .btn { display: inline-block !important; }
+  .print-break { page-break-before: always; break-before: page; }
+  .resume-growth .job, .resume-growth .job-head { page-break-inside: avoid; }
+  .resume-growth h1 { font-size: 72px; }
 }
 
 // resume: growth variant (VC Henrietta Condensed + VC Nudge Text)
