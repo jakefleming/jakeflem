@@ -592,6 +592,7 @@ a {
 
 .resume-growth {
   font-family: "VC Nudge Text";
+  p, li, h1, h3 { text-wrap: pretty; }
   font-feature-settings: normal;
   font-size: 18px;
   line-height: 1.45;
