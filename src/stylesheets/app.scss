@@ -570,6 +570,7 @@ a {
 @font-face { font-family: "VC Henrietta Condensed"; font-weight: 900; font-display: block; src: url("../fonts/VCHenriettaCondensed-Black.woff2") format("woff2"); }
 @font-face { font-family: "VC Henrietta Condensed"; font-weight: 700; font-display: block; src: url("../fonts/VCHenriettaCondensed-Bold.woff2") format("woff2"); }
 @font-face { font-family: "VC Nudge Text"; font-weight: 400; font-display: block; src: url("../fonts/VCNudgeText-Regular.woff2") format("woff2"); }
+@font-face { font-family: "VC Nudge Text"; font-weight: 500; font-display: block; src: url("../fonts/VCNudgeText-Medium.woff2") format("woff2"); }
 @font-face { font-family: "VC Nudge Text"; font-weight: 700; font-display: block; src: url("../fonts/VCNudgeText-Bold.woff2") format("woff2"); }
 
 .resume-growth {
@@ -581,8 +582,8 @@ a {
   h1, h3 { font-family: "VC Henrietta Condensed"; font-weight: 400; line-height: .95; letter-spacing: 0; }
   h1 { font-size: 72px; margin: 0 0 .75rem; }
   h3 { font-size: 44px; margin: 0 0 1.25rem; }
-  .resume-meta { margin: 0; font-family: "VC Nudge Text"; font-weight: 700; font-size: 13px; letter-spacing: .04em; }
+  .resume-meta { margin: 0; font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
   .job-co { font-family: "VC Henrietta Condensed"; font-weight: 400; font-size: 26px; text-transform: none; letter-spacing: 0; }
-  .job-role, .job-when { font-family: "VC Nudge Text"; font-weight: 700; font-size: 13px; letter-spacing: .04em; }
+  .job-role, .job-when { font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
   a { font-family: inherit; }
 }
