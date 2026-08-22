@@ -9,7 +9,6 @@
 
     <!-- Preload every web font so they're all ready before first paint and content reveals fast. -->
     <link rel="preload" href="/fonts/Industrious-WideBlack.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/VCHenriettaCondensed-Black.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/Obviously-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/Obviously-Extended.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/Obviously-Narrow_Medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -96,7 +95,6 @@
           if (document.fonts && document.fonts.load) {
             Promise.all([
               document.fonts.load('1em "Industrious"'),
-              document.fonts.load('900 1em "VC Henrietta Condensed"'),
               document.fonts.load('1em "Obviously"'),
               document.fonts.load('1em "Obviously Extended"'),
               document.fonts.load('1em "Obviously Narrow"'),
