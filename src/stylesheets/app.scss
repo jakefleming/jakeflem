@@ -582,7 +582,7 @@ a {
   .container { max-width: 720px; }
   h1, h3 { font-family: "VC Henrietta"; font-weight: 400; line-height: 1; letter-spacing: -.01em; }
   h1 { font-size: 96px; line-height: .9; margin: 0; }
-  .resume-head { display: flex; align-items: last baseline; gap: 2.5rem; }
+  .resume-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 2.5rem; }
   .resume-head h1 { flex: none; }
   .resume-head-meta { flex: none; }
   .resume-head-meta .resume-meta { margin: 0; line-height: 1.5; }
@@ -592,5 +592,5 @@ a {
   .resume-links { margin-top: .25rem; }
   .job-co { font-family: "VC Henrietta Condensed"; font-weight: 400; font-size: 26px; text-transform: none; letter-spacing: 0; }
   .job-role, .job-when { font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
-  a { font-family: inherit; }
+  a { font-family: inherit; color: inherit; text-decoration: underline; text-decoration-color: rgba($dark-color, .35); text-underline-offset: .15em; &:hover { text-decoration-color: currentColor; } }
 }
