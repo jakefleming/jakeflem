@@ -545,3 +545,22 @@ a {
 .resume .job-role { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; }
 .resume .job-when { font-family: 'Obviously Narrow'; text-transform: uppercase; letter-spacing: .5px; font-size: 14px; margin-left: auto; color: rgba($dark-color, .55); }
 @media (max-width: 600px) { .resume .job-when { margin-left: 0; } }
+
+// print (resume PDF)
+@media print {
+  @page { margin: 0.55in 0.6in; }
+  html, body { background: #fff; }
+  .fonts-loading body { opacity: 1; }
+  .resume { font-size: 10.5pt; line-height: 1.35; }
+  .resume .section { padding: 0 0 1.25rem; }
+  .resume .section:first-child { padding-top: 0; }
+  .resume .container { max-width: none; padding: 0; }
+  .resume .stw { margin-top: .5rem; }
+  .resume .job { padding: .7rem 0; page-break-inside: avoid; }
+  .resume .job p { margin-top: .3rem; }
+  .resume h4 { font-size: 22px; }
+  .resume h1, .resume h3, .resume h4 { page-break-after: avoid; }
+  .resume li { margin-bottom: .25rem; }
+  .resume a { text-decoration: none; }
+  .resume .btn { display: none !important; }
+}
