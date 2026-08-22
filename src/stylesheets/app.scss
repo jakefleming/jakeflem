@@ -581,7 +581,11 @@ a {
   line-height: 1.45;
   .container { max-width: 720px; }
   h1, h3 { font-family: "VC Henrietta"; font-weight: 400; line-height: 1; letter-spacing: -.01em; }
-  h1 { font-size: 96px; line-height: .9; margin: 0 0 1rem; }
+  h1 { font-size: 96px; line-height: .9; margin: 0; }
+  .resume-head { display: flex; align-items: baseline; gap: 2rem; flex-wrap: wrap; }
+  .resume-head-meta { margin-left: auto; text-align: right; }
+  .resume-head-meta .resume-links { margin-top: .25rem; }
+  @media (max-width: 600px) { .resume-head-meta { margin-left: 0; text-align: left; } }
   h3 { font-size: 48px; margin: 0 0 1.25rem; }
   .resume-meta { margin: 0; white-space: nowrap; font-family: "VC Nudge Text"; font-weight: 500; font-size: 13px; letter-spacing: .04em; }
   .resume-links { margin-top: .25rem; }
