@@ -16,6 +16,14 @@
 }
 
 @font-face {
+  font-family: "VC Henrietta Condensed";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("../fonts/VCHenriettaCondensed-Black.woff2") format("woff2");
+}
+
+@font-face {
   font-family: "Obviously Extended";
   font-style: normal;
   font-display: block;
@@ -87,7 +95,8 @@ ul {
 }
 
 h1 {
-  font-family: "Industrious";
+  font-family: "VC Henrietta Condensed";
+  font-weight: 900;
   font-size: 56px;
   line-height: 1;
 }
@@ -99,7 +108,8 @@ h2 {
 }
 
 h3 {
-  font-family: "Industrious";
+  font-family: "VC Henrietta Condensed";
+  font-weight: 900;
   font-size: 92px;
   line-height: 1;
 }
