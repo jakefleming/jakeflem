@@ -548,7 +548,7 @@ a {
 
 // print (resume PDF)
 @media print {
-  @page { margin: 0.55in 0.6in; }
+  @page { margin: 0.45in 0.6in; }
   html, body { background: #fff; }
   .fonts-loading body { opacity: 1; }
   .resume { font-size: 10.5pt; line-height: 1.35; }
@@ -564,8 +564,18 @@ a {
   .resume a { text-decoration: none; }
   .resume-growth .btn { display: inline-block !important; }
   .print-break { page-break-before: always; break-before: page; }
-  .resume-growth .job, .resume-growth .job-head { page-break-inside: avoid; }
+  .resume-growth .job { page-break-inside: auto; }
+  .resume-growth .job-head { page-break-inside: avoid; page-break-after: avoid; }
   .resume-growth h1 { font-size: 72px; }
+  .resume-growth { font-size: 9pt; line-height: 1.28; }
+  .resume-growth p, .resume-growth li { font-size: 9pt; }
+  .resume-growth .section { padding-bottom: 0; }
+  .resume-growth .resume-head { margin-bottom: 2.5rem; }
+  .resume-growth h3 { font-size: 32px; margin-bottom: .5rem; }
+  .resume-growth .job { padding: .4rem 0; }
+  .resume-growth .job p { margin-top: .2rem; }
+  .resume-growth .job-co { font-size: 22px; }
+  .resume-growth .job-role, .resume-growth .job-when { font-size: 11px; }
 }
 
 // resume: growth variant (VC Henrietta Condensed + VC Nudge Text)
