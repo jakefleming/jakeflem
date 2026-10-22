@@ -50,3 +50,14 @@ deploy, so there's nothing to build or commit by hand.
 > **One-time setup:** in the repo's **Settings → Pages**, set **Source** to
 > **GitHub Actions** (instead of "Deploy from a branch"). The custom domain
 > (`jakeflem.com`) is preserved via `src/static/CNAME`.
+
+## Portfolio v2 (local development)
+
+Run `npm run start:v2` and open http://127.0.0.1:8081/v2/.
+The original homepage remains at `/`.
+
+- `src/v2/index.njk`: v2 homepage, initially copied from the existing homepage.
+- `src/static/stylesheets/v2.css`: v2-only style overrides.
+- Add case studies under `src/v2/` as the portfolio develops.
+
+The v2 page is marked noindex; this is not access control for confidential work.

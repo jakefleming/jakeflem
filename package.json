@@ -1,7 +1,7 @@
 {
   "name": "jakeflem",
   "version": "2.0.0",
-  "description": "Jake Fleming's personal site — built with Eleventy.",
+  "description": "Jake Fleming's personal site \u2014 built with Eleventy.",
   "repository": "https://github.com/jakefleming/jakeflem.git",
   "author": "jake <jcbflmng@gmail.com>",
   "license": "MIT",
@@ -17,7 +17,9 @@
     "build:sass": "sass --no-source-map --style=compressed src/stylesheets/app.scss:docs/stylesheets/app.css",
     "build:js": "esbuild src/javascripts/app.js --bundle --minify --outfile=docs/javascripts/app.js",
     "build:html": "eleventy",
-    "clean": "rimraf docs"
+    "clean": "rimraf docs",
+    "start:v2": "npm-run-all clean build:assets --parallel watch:eleventy:v2 watch:sass watch:js",
+    "watch:eleventy:v2": "eleventy --serve --port=8081 --quiet"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

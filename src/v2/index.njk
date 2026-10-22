@@ -1,0 +1,101 @@
+{% extends 'layouts/application.njk' %}
+{% block head %}
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/stylesheets/v2.css">
+{% endblock %}
+{% block content %}
+<main class="portfolio-v2">
+  <section class="section">
+    <div class="container text-center">
+      <div class="stw p-relative">
+        <h1><span class="resize d-block" style="padding: 0 20%;">Jake</span><span class="resize d-block">Fleming</span></h1>
+        <h2>Designer + Engineer</h2>
+      </div>
+      <p class="lead intro">I agonize over quality and the details that make something feel really good. I design interfaces, build systems and tools, and ship production code. My work spans complex labeling editors, native macOS software for type designers, and web and mobile applications.</p>
+      <nav class="page-links" aria-label="On this page"><a href="#about">About me</a><a href="#work">Selected work</a><a href="#contact">Get in touch</a></nav>
+    </div>
+  </section>
+  <section class="section" id="about">
+    <div class="container">
+      <h4 class="text-center">A little</h4>
+      <div class="stw p-relative"><h3 class="text-center resize">About me</h3></div>
+      <div class="sprite-window" style="margin-top: -60px;margin-bottom: 2rem;">
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="particle-rig"><div class="particle"></div></div>
+        <div class="rig rig-csshtml">
+          <div class="csshtml-walking"></div>
+        </div>
+        <div class="rig rig-artdesign">
+          <div class="artdesign-crawling"></div>
+        </div>
+        <div class="rig rig-guy">
+          <div class="guy-jogging"></div>
+        </div>
+        <div class="rig rig-js">
+          <div class="js-flying"></div>
+        </div>
+        <div class="rig rig-sanity">
+          <div class="sanity-hopping"></div>
+        </div>
+        <div class="rig rig-perfection">
+          <div class="perfection-walking"></div>
+        </div>
+      </div>
+      <p>I’ve spent much of my career designing complex technical products and writing the code behind them. At Labelbox, that meant tools for labeling data, working with AI models, and evaluating their responses. I grew from Lead Designer to VP of Design, built the design team, and kept shipping production code along the way.</p>
+      <p>More recently, I designed developer onboarding at Cortex and worked across product, engineering, and brand at Attilio. I also make and sell software of my own.</p>
+      <p>I have a soft spot for typography, <a href="https://dribbble.com/shots/2587339-Mega-Turd">illustration</a>, and <a href="https://dribbble.com/shots/2415798-Kitty-Wiggle-Pt-2">animation</a>. I like sharing what I learn, too—from teaching <a href="https://medium.com/type-thursday/create-your-own-font-in-48-hours-f1d42f911a51">type-design workshops</a> to leading the product design program at Tradecraft.</p>
+      <p><a href="/resume/">Full work history ↗</a></p>
+    </div>
+  </section>
+  <section class="section" id="work">
+    <div class="container">
+      <h4 class="text-center">Selected</h4>
+      <div class="stw"><h3 class="text-center resize">Work</h3></div>
+      <article class="work-entry">
+        <header><h2>Hellbox</h2><p class="work-meta">Native macOS · SwiftUI · MCP</p></header>
+        <div><p>A font-proofing app I designed, built, and continue to develop with working type designers. Live font-editor integrations, reusable proof templates, and PDF output. Used daily by Ohno Type Company, Klim Type Foundry, and Very Cool Studio, among others.</p>
+        <p>I also built an MCP server so Claude and other assistants can create and edit proofs.</p>
+        <a href="https://hellbox.com">Check out Hellbox ↗</a></div>
+      </article>
+      <article class="work-entry">
+        <header><h2>Labelbox</h2><p class="work-subtitle">Editors + Prototypes</p><p class="work-meta">Interaction design · React · TypeScript</p></header>
+        <div><p>Labeling long videos with large ontologies was a lot to ask of a Figma prototype. I worked through those experiences in code alongside engineering, including model-assisted labeling and AI-response evaluation workflows.</p><p>Engineering shipped from the prototype code while referencing the shared design system.</p></div>
+      </article>
+      <article class="work-entry work-entry-continuation">
+        <header><p class="work-subtitle">Design System</p><p class="work-meta">Figma · Production React</p></header>
+        <div><p>Built and maintained the design system in Figma and production React for five years. Defined component APIs and composition patterns, reviewed contributions, and coordinated migrations with engineering.</p><p>Owned the details from typography and theming to keyboard navigation and focus states.</p></div>
+      </article>
+      <article class="work-entry">
+        <header><h2>Attilio</h2><p class="work-subtitle">Product + Systems</p><p class="work-meta">Web · React Native · Brand</p></header>
+        <div><p>Designed product experiences and shipped production UI code across web and React Native mobile applications.</p><p>Built shared design systems, created the brand and icon system, and distributed Claude and Codex skills that teammates used to create materials within the brand guidelines.</p></div>
+      </article>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h4 class="text-center">Other things</h4>
+      <div class="stw"><h3 class="text-center resize">I’ve made</h3></div>
+      <ul class="other-work">
+        <li><a href="https://designercize.com">Designercize</a><span>A product design challenge tool</span></li>
+        <li><a href="https://idiotproofed.com">Idiot Proofed</a><span>A font proofing app for type designers</span></li>
+        <li><a href="https://www.futurefonts.xyz/jake-fleming/boxout">Boxout</a><span>A typeface</span></li>
+        <li><a href="https://www.futurefonts.xyz/jake-fleming/goiters">Goiters</a><span>Another typeface</span></li>
+        <li><a href="https://store.steampowered.com/app/858530/Cat_Lady/">Cat Lady</a><span>An adorable procedural dungeon crawler</span></li>
+        <li><a href="https://2x2.xyz">2x2</a><span>A priority-matrix productivity app built with Firebase and Vue</span></li>
+      </ul>
+    </div>
+  </section>
+  <section class="section" id="contact">
+    <div class="container text-center">
+      <h4>What’s next?</h4>
+      <div class="stw"><h3 class="resize">Let’s talk</h3></div>
+      <p>I’m looking for my next role designing and building thoughtful software. If that sounds like something your team needs, I’d like to talk.</p>
+      <p><a class="btn btn-primary btn-lg btn-wide-mobile" href="mailto:hey@jakeflem.ing">Say hello</a></p>
+      <div class="page-links"><a href="/resume/">Resume</a><a href="https://www.linkedin.com/in/jakeflem/">LinkedIn</a><a href="https://github.com/jakefleming">GitHub</a></div>
+    </div>
+  </section>
+</main>
+{% endblock %}
